@@ -10,6 +10,10 @@ class User(AbstractUser):
     profile_photo = models.ImageField(blank=True)
     bio = models.TextField(blank=True)
     email = models.CharField(blank=True, max_length=255)
+    
+    class Meta:
+        db_table = "my_user"
+        
 
     def get_absolute_url(self):
         return reverse("users:login", kwargs={"username": self.username})

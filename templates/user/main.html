@@ -6,47 +6,26 @@
   <div id="container">
     <div id="borderBox">
       <!-- 로그인 박스 -->
-      <div id="loginBox">
+      <div class="loginBox">
         <!-- 대문이름 -->
         <div id="logo">
           <a href="#">Django Project</a>
         </div>
         <!-- 로그인폼 -->
         <div id="login_text">
-          <form action="{% url 'user:login' %}" method="POST" id="loginForm">
+          <form action="{% url 'user:main' %}" method="POST" id="loginForm">
             {% csrf_token %}
             <!-- 아이디 입력창 -->
-            <div id="input-aria">
-              <label id="input-info">
-                <input
-                  aria-label="사용자 이름"
-                  aria-required="true"
-                  autocapitalize="off"
-                  autocorrect="off"
-                  maxlength="75"
-                  name="username"
-                  type="text"
-                  class="get-input"
-                  placeholder="사용자 이름"
-                  value
-                />
-              </label>
+            <div class="input-aria">
+              <div class="input-info">
+                <input type="input" name="username" placeholder="사용자 이름" class="get-input">
+              </div>
             </div>
             <!-- 비밀번호 입력창 -->
-            <div id="input-aria">
-              <label id="input-info">
-                <input
-                  aria-label="비밀번호"
-                  aria-required="true"
-                  autocapitalize="off"
-                  autocorrect="off"
-                  name="password"
-                  type="password"
-                  class="get-input"
-                  placeholder="비밀번호"
-                  value
-                />
-              </label>
+            <div class="input-aria">
+              <div class="input-info">
+                <input type="password" name="password" placeholder="비밀번호" class="get-input">
+              </div>
             </div>
             <!-- 로그인버튼 -->
             <div id="btnStyle">
@@ -58,8 +37,8 @@
         </div>
       </div>
       <!-- 회원가입 링크 박스 -->
-      <div id="loginBox">
-        <span id="signup-span">
+      <div class="loginBox">
+        <span>
           <p id="signup-p">
             계정이 없으신가요?
             <a href="{% url 'user:signup' %}" role="link" tabindex="0"
