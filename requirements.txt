@@ -1,16 +1,21 @@
 asgiref==3.6.0
 astroid==2.15.2
 autopep8==2.0.2
+colorama==0.4.6
 dill==0.3.6
 Django==4.2
 isort==5.12.0
 lazy-object-proxy==1.9.0
 mccabe==0.7.0
+Pillow==9.5.0
 platformdirs==3.2.0
 pycodestyle==2.10.0
 pylint==2.17.2
+pylint-django==2.5.3
+pylint-plugin-utils==0.7
 sqlparse==0.4.3
 tomlkit==0.11.7
+tzdata==2023.3
 wrapt==1.15.0
 
 # pip install -r requirements.txt
