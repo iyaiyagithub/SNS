@@ -3,5 +3,14 @@
 {% load static %}
 
 {% block content %}
-메이페이지입니다.
+
+{% for post in posts %}
+<a href="{% url 'post:post-detail' post.id %}">
+    <div>작성자: {{ post.author.username }}</div>
+    <div>작성일: {{ post.create_at }}</div>
+    <div>{{ post.caption }}</div>
+</a>
+{% endfor %}
+
+
 {% endblock content %}
