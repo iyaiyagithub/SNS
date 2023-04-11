@@ -3,11 +3,13 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
+from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 
 def login(request):
     if request.method == "GET":
-        return render(request, 'users/login.html')
+        return render(request, 'user/main.html')
 
     elif request.method == "POST":
         username = request.POST["username"]
@@ -15,17 +17,17 @@ def login(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse('posts:index')) # 메인 화면으로
+            login(request)
+            return HttpResponseRedirect(reverse('post:postMain'))
 
         else:
-            return render(request, 'users/main.html')
+            return render(request, 'user/signup.html')
 
 
 def signup(request):
     if request.method == "GET":
         form = SignUpForm()
-        return render(request, 'users/signup.html', {'form': form})
+        return render(request, 'user/signup.html', {'form': form})
 
     elif request.method == "POST":
         form = SignUpForm(request.POST)
@@ -36,5 +38,10 @@ def signup(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(reverse('posts:index')) # 메인화면으로
-        return render(request, 'users/login.html')
+                return HttpResponseRedirect(reverse('post:post'))
+        return render(request, 'user/main.html')
+
+@login_required
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('user:login'))

@@ -1,0 +1,49 @@
+#main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+    border-bottom: 1px solid rgb(219, 219, 219);
+  }
+  
+  #logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  #logo img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .serach {
+    width: 250px;
+    height: 25px;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  #nav-content {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+  }
+  
+  #nav-content li {
+    padding: 0 10px;
+  }
+  
+  #nav-content a {
+    color: rgb(34, 128, 217);
+    font-weight: bold;
+  }
+  
+  #nav-content a:hover {
+    color: rgb(2, 89, 171);
+  }
+  
