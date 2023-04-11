@@ -1,18 +1,10 @@
 {% load static %}
 <header id="main-header">
   <div>
-    <a href="{% url 'post:postMain' %}" id="logo"
-      ><img src="{% static 'images/post/mainlogo.png' %}" alt="logo"
-    /></a>
+    <a href="{% url 'post:postMain' %}" id="logo"><img src="{% static 'images/post/mainlogo.png' %}" alt="logo" /></a>
   </div>
   <div>
-    <input
-      aria-label="입력 검색"
-      autocapitalize="none"
-      class="serach"
-      placeholder="검색"
-      type="text"
-    />
+    <input aria-label="입력 검색" autocapitalize="none" class="serach" placeholder="검색" type="text" />
   </div>
   {% if not user.is_authenticated %}
   <ul id="nav-content">
@@ -21,7 +13,7 @@
   </ul>
   {% else %}
   <ul id="nav-content">
-    <li><a href="#">글쓰기</a></li>
+    <li><a href="{% url 'post:write-post' %}">글쓰기</a></li>
     <li><a href="{% url 'user:logout' %}">로그아웃</a></li>
   </ul>
   {% endif %}
