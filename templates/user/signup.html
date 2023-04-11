@@ -1,13 +1,15 @@
 {% extends "user/base.html" %}
 <h1>users/signup.html 페이지 입니다.</h1>
-{% block title %} 회원가입 {% endblock title %} {% block content %}
+{% block title %} 회원가입 {% endblock title %}
+
+{% block content %}
 
 <div class="text-center">
   <!-- 구성화면 -->
   <div id="container">
     <div id="borderBox">
       <!-- 회원가입 박스 -->
-      <div id="loginBox">
+      <div class="loginBox">
         <!-- 대문이름 -->
         <div id="logo">
           <a href="#">Django Project</a>
@@ -17,49 +19,14 @@
           <form action="{% url 'user:signup' %}" method="POST" id="loginForm">
             <h2 id="desc">친구들의 피드를 보려면 가입하세요.</h2>
             {% csrf_token %}
-            <div id="input-aria">
-              <label id="input-info">
-                <input
-                  name="email"
-                  type="text"
-                  class="get-input"
-                  placeholder="이메일 주소"
-                  value="{{ form.email.value|default_if_none:'' }}"
-                />
-              </label>
+            {% for field in form %}
+            <div class="input-aria">
+                <div class="input-info">
+                    {{ field.errors }}
+                    {{ field }}
+                </div>
             </div>
-            <div id="input-aria">
-              <label id="input-info">
-                <input
-                  name="name"
-                  type="text"
-                  class="get-input"
-                  placeholder="성명"
-                  value="{{ form.name.value|default_if_none:'' }}"
-                />
-              </label>
-            </div>
-            <div id="input-aria">
-              <label id="input-info">
-                <input
-                  name="username"
-                  type="text"
-                  class="get-input"
-                  placeholder="사용자 이름"
-                  value="{{ form.username.value|default_if_none:'' }}"
-                />
-              </label>
-            </div>
-            <div id="input-aria">
-              <label id="input-info">
-                <input
-                  name="username"
-                  type="password"
-                  class="get-input"
-                  placeholder="비밀번호"
-                  value="{{ form.password.value|default_if_none:'' }}"
-                />
-              </label>
+            {% endfor %}
             </div>
             <!-- 회원가입 버튼 -->
             <div id="btnStyle">
@@ -71,14 +38,14 @@
         </div>
       </div>
       <!-- 로그인 링크 박스 -->
-      <div id="loginBox">
+      <div class="loginBox">
         <span id="signup-span">
           <p id="signup-p">
-            계정이 있으신가요?
-            <a href="{% url 'user:login' %}" role="link" tabindex="0">로그인</a>
+            계정이 없으신가요?
+            <a href="{% url 'user:main' %}" role="link">로그인</a>
           </p>
         </span>
-      </div>
+       </div>
     </div>
   </div>
 </div>
