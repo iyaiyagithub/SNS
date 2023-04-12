@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from .models import User as user_model
 
 
 def main(request):
@@ -52,3 +53,14 @@ def signup(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('user:login'))
+
+
+@login_required
+def profile(request, id):
+    user = get_object_or_404(user_model, id=request.user.id)
+    return render(request, 'user/profile_detail.html', {'user': user})
+
+
+
+# 1. 본인 프로필
+# 2. post 작성한 프로필

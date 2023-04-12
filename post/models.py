@@ -10,7 +10,6 @@ class TimeStamedModel(models.Model):
         abstract = True
 
 
-
 class Post(TimeStamedModel):
     author = models.ForeignKey(
         user_model.User,

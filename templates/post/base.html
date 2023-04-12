@@ -16,18 +16,18 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static 'css/posts/main.css' %}"
+      href="{% static 'css/post/main.css' %}"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'css/post/header.css' %}"
-    />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/post/main.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/post/nav.css' %}">
+    <!-- js 시트 -->
+
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <div>{% include "post/header.html" %}</div>
-    <div>{% block content %}{% endblock content %}</div>
+    <div>{% include "post/nav.html" %}</div>
+    <div>
+      {% block content %}
+      {% endblock content %}
+    </div>
   </body>
 </html>

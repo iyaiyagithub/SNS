@@ -16,7 +16,6 @@ class SignUpForm(django_forms.ModelForm):
             'password': django_forms.PasswordInput(attrs={'class': 'get-input', 'placeholder': '비밀번호'}),
         }
 
-        
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -24,3 +23,10 @@ class SignUpForm(django_forms.ModelForm):
         if commit:
             user.save()
         return user
+    
+
+class ProfileUpdateForm(django_forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = '__all__'
