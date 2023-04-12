@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django import forms as django_forms
 
+
 User = get_user_model()
 
 
@@ -22,3 +23,7 @@ class SignUpForm(django_forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class UserUpdateForm(django_forms.ModelForm):
+    name = django_forms.CharField()
