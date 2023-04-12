@@ -27,3 +27,7 @@ class SignUpForm(django_forms.ModelForm):
 
 class UserUpdateForm(django_forms.ModelForm):
     name = django_forms.CharField()
+
+    class Meta:
+        model = User
+        fields = ['name', 'username', 'email', 'password']
