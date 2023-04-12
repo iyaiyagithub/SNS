@@ -40,23 +40,31 @@ def write_post(request):
             write_post = post_form.save(commit=False)
             write_post.author = request.user
             write_post.save()
-            return HttpResponse("게시글 작성 완료!")  # 임시 return
             # 어디로 이동해야 하는지 모르겠음
-            # return HttpResponseRedirect(reverse('post:postMain'))
+            return HttpResponseRedirect(reverse('post:postMain'))
 
 
-def edit_post(request):
+def edit_post(request,id):
     """게시글을 수정하는 함수"""
+    edit_post = Post.objects.get(id=id)
+    current_edit_post = edit_post.id
+    
     if request.method == 'GET':
-        pass
+        return render (request, 'post/write-post.html', {'edit-post':edit_post})
 
     elif request.method == 'POST':
-        pass
+        edit_post.caption = request.POST.get ("edit_post_caption","")
+        edit_post.image = request.POST.get ("edit_post_image","")
+        edit_post.save()
+        return redirect('/edit=post/'+str(current_edit_post))
+    
 
-
-def delete_post(request):
+def delete_post(request,id):
     """게시글을 삭제하는 함수"""
-    pass
+    delete_post = Post.objects.get(id=id)
+    current_delete_post = delete_post.id
+    delete_post.delete()
+    return redirect('/delete-post/'+str(current_delete_post))
 
 
 def post_list(request):
@@ -75,6 +83,7 @@ def user_feed(request):
             return render(request, 'feed-page.html', {'posts': post_list})
         else:
             return redirect('user/signup.html')
+        # d
 
 
 """마이페이지를 보여주는 함수 이름,프로필,프사,이메일"""
