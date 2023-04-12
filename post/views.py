@@ -9,6 +9,7 @@ from .forms import PostForm
 from .models import Post
 
 
+
 # Create your views here.
 
 
@@ -61,3 +62,27 @@ def post_list(request):
     if user:
         post_list = Post.objects
         return render(request, 'post/main.html', {'posts': post_list})
+
+
+"""피드 페이지 """
+def user_feed(request):
+    user = request.user.is_authenticated
+    if request.method == 'GET':
+        if user:
+            post_list = Post.objects.all().order_by('-created_at')
+            return render(request, 'feed-page.html', {'posts': post_list})
+        else:
+            return redirect('user/signup.html')
+
+
+"""마이페이지를 보여주는 함수 이름,프로필,프사,이메일"""
+def mypage_view(request, id):
+    if request.method == 'GET':
+        user = request.user.is_authenticated
+        if user:
+            user_infoes = user_model.objects.get(id=id)
+            return render(request,'user/profile',{"user_infoes": user_infoes})
+        else:
+            return redirect('user/signup.html')
+        
+    

@@ -42,3 +42,5 @@ class Comment(TimeStamedModel):
 
     def __str__(self):
         return f"{self.author}: {self.contents}"
+    
+
