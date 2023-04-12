@@ -1,0 +1,15 @@
+{% extends 'base.html' %}'
+
+{% block title %}Profile Update{% endblock title %}
+
+{% block content %}
+    <h1>프로필 수정</h1>
+    <form action="{% url 'user:profile_update' %}" method="POST">
+        {% csrf_token %}
+        <label for="name">Name</label>
+        <label for="username">Username</label>
+        <label for="profile_photo">Profile Photo</label>
+        <label for="bio">Bio</label>
+        <label for="email">Email</label>
+    </form>
+{% endblock content %}
