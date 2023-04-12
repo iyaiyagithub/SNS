@@ -1,0 +1,12 @@
+{% extends 'base.html' %}'
+
+{% block title %}Profile Detail{% endblock title %}
+
+{% block content %}
+    <h1>상세 프로필</h1>
+    <p>이름: {{ user.name }}</p>
+    <p>닉네임: {{ user.username }}</p>
+    <p>프로필 사진: {{ user.profile_photo }}</p>
+    <p>소개: {{ user.bio }}</p>
+    <p>이메일: {{ user.email }}</p>
+{% endblock content %}
