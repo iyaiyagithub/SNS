@@ -39,8 +39,9 @@ def write_post(request):
             write_post = post_form.save(commit=False)
             write_post.author = request.user
             write_post.save()
+            return HttpResponse("게시글 작성 완료!")  # 임시 return
             # 어디로 이동해야 하는지 모르겠음
-            return HttpResponseRedirect(reverse('post:postMain'))
+            # return HttpResponseRedirect(reverse('post:postMain'))
 
 
 def edit_post(request):
