@@ -33,12 +33,13 @@ def write_post(request):
         return render(request, 'post/write-post.html', {'posts': post_form})
 
     elif request.method == 'POST':
-        post_form = PostForm(request.POST)
+        post_form = PostForm(request.POST, request.FILES)
 
         if post_form.is_valid():
             write_post = post_form.save(commit=False)
             write_post.author = request.user
             write_post.save()
+            # 어디로 이동해야 하는지 모르겠음
             return HttpResponseRedirect(reverse('post:postMain'))
 
 
