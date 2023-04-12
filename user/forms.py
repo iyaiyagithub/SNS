@@ -30,4 +30,5 @@ class UserUpdateForm(django_forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['name', 'username', 'email', 'password']
+        
+        fields = '__all__'
