@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-
+<div>{% include "user/profile_views.html" %}</div>
 
 <main class="container">
   {% for post in posts %}
@@ -79,8 +79,8 @@
               <div class="post-image1">
                 {% if post.image %}
                 <div class="post-image2">
-                  <img src="{{ post.image.url }}" alt="post-image" crossorigin="anonymous" decoding="auto" sizes="468px"
-                    style="object-fit: cover" />
+                  <img src="media/{{ post.image }}" alt="post-image" crossorigin="anonymous" decoding="auto"
+                    sizes="468px" style="object-fit: cover" />
                 </div>
                 {% else %}
                 <div class="post-image2">

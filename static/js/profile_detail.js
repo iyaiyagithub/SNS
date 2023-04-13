@@ -1,11 +1,17 @@
-{/* 사용자 ID를 URL 파라미터에서 추출합니다. */}
-const params = new URLSearchParams(window.location.search);
-const userId = params.get('id');
-{/* 서버로부터 사용자 프로필 정보를 가져와서 화면에 표시합니다. */}
-fetch(`/api/users/${userId}`)
-.then(response => response.json())
-.then(data => {
-    document.getElementById('username').textContent = data.username;
-    document.getElementById('email').textContent = data.email;
+function readImage(input) {
+    if(input.files && input.files[0]) {
+        const reader = new FileReader()
+
+        reader.onload = e => {
+            const previewImage = document.getElementById("preview-image")
+            previewImage.src = e.target.result
+        }
+
+        reader.readAsDataURL(input.files[0])
+    }
+}
+
+const inputImage = document.getElementById("input-image")
+inputImage.addEventListener("change", e => {
+    readImage(e.target)
 })
-.catch(error => console.error(error));

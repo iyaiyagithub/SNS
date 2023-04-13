@@ -3,6 +3,7 @@
 <div class="profile-box">
     <div class="detail-box">
         <!-- 프로필 사진 -->
+
         <div class="photo-box">
             <img src="{% static 'images/post/noavatar.png' %}" alt="profile_photo">
         </div>
@@ -19,8 +20,10 @@
         <div class="profile-contents">
             이메일 : {{ user.email }}
         </div>
-        <div class="profile-contents">
-            <a href="#">수정하기</a>
+        <div class="profile-contents2">
+            <a href="{% url 'user:edit-profile' user.id %}">
+                수정하기
+            </a>
         </div>
     </div>
 </div>
