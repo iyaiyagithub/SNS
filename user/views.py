@@ -1,17 +1,21 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
+from .models import User as models_user
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import UserUpdateForm
 
+from post import models
+
 
 def main(request):
     if request.method == 'GET':
-        return render(request, 'user/main.html')
+        if request.user.is_authenticated:
+            return render(request, 'post/base.html')
 
     elif request.method == 'POST':
         username = request.POST['username']
@@ -20,10 +24,9 @@ def main(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('post:postMain'))
+            return HttpResponseRedirect(reverse('post:main'))
 
-        else:
-            return render(request, 'user/main.html')
+    return render(request, 'user/main.html')
 
 
 def signup(request):
@@ -45,7 +48,7 @@ def signup(request):
 
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(reverse('post:postMain'))
+                return HttpResponseRedirect(reverse('post:main'))
 
         return render(request, 'user/main.html')
 
@@ -53,13 +56,16 @@ def signup(request):
 @login_required
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('user:login'))
+    return render(request, 'user/main.html')
 
 
 @login_required
 def profile_detail(request):
-    user = request.user
-    return render(request, 'user/profile_detail.html', {'user': user})
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            user = get_object_or_404(models_user, pk=request.user.id)
+            posts = models.Post.objects.filter(author=user)
+            return render(request, 'user/profile_detail.html', {'user': user, "posts": posts})
 
 
 @login_required

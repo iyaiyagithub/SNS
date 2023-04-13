@@ -26,7 +26,7 @@
                         </a>
                     </div>
                     <div class="nav-content">
-                        <a href="">
+                        <a href="{% url 'user:profile-detail' %}">
                             <div class="nav-content2">
                                 <div class="nav-content-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="rgb(0, 0, 0)"
@@ -57,25 +57,27 @@
                         </a>
                     </div>
                     <div class="nav-content">
-                        <a href="">
-                            <div class="nav-content2">
-                                <div class="nav-content-icon">
-                                    <svg aria-label="검색" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)" height="24" role="img"
-                                        viewBox="0 0 24 24" width="24">
-                                        <path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z" fill="none"
-                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"></path>
-                                        <line fill="none" stroke="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="2" x1="16.511" x2="22" y1="16.511"
-                                            y2="22"></line>
-                                    </svg>
-                                </div>
-                                <div class="nav-content-name">검색</div>
+                        <div class="nav-content2">
+                            <div class="nav-content-icon">
+                                <svg aria-label="검색" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)" height="24" role="img"
+                                    viewBox="0 0 24 24" width="24">
+                                    <path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z" fill="none"
+                                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"></path>
+                                    <line fill="none" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="2" x1="16.511" x2="22" y1="16.511"
+                                        y2="22"></line>
+                                </svg>
                             </div>
-                        </a>
+                            <div class="nav-content-name">
+                                <form action="{% url 'post:post_search' %}" class="search" method="GET">
+                                    <input aria-label="검색" autocapitalize="none" class="search" placeholder="검색" type="text" name="q">
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="nav-content">
-                        <a href="">
+                        <a href="{% url 'user:logout' %}">
                             <div class="nav-content2">
                                 <div class="nav-content-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="rgb(0, 0, 0)"

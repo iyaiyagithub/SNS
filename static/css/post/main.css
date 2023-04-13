@@ -88,8 +88,6 @@ a {
   position: relative;
   justify-content: center;
   box-sizing: border-box;
-  max-height: inherit;
-  max-width: inherit;
   overflow: visible;
 }
 
@@ -123,6 +121,35 @@ a {
   width: 42px;
   height: 42px;
 }
+
+.head-main-box {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.edit-del {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.edit-del-btn {
+  margin: 4px;
+  padding-left: 4px;
+}
+
+
+
+
+
+
+
+
+
 
 .photo2 {
   background-color: rgb(250, 250, 250);
