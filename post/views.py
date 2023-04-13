@@ -95,7 +95,8 @@ def mypage_view(request, id):
     if request.method == 'GET':
         user = request.user.is_authenticated
         if user:
-            user_infoes = user_model.objects.get(id=id)
-            return render(request, 'user/profile', {"user_infoes": user_infoes})
+            posts_written_by_user = Post.objects.filter(author_id = id)
+            # 작성자 아이디가 입력받은 아이디와 일치하는 포스트를 DB에서 찾음
+            return render(request, 'user/profile', {"user_posts": posts_written_by_user})
         else:
             return redirect('user/signup.html')
