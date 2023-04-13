@@ -18,7 +18,7 @@ class Post(TimeStamedModel):
         on_delete=models.CASCADE,
         related_name='post_author'
     )
-    image = models.ImageField(blank=True, null=True, upload_to="")
+    image = models.ImageField(blank=True, null=True)
     caption = models.TextField(blank=False)
 
     def __str__(self):
@@ -42,5 +42,3 @@ class Comment(TimeStamedModel):
 
     def __str__(self):
         return f"{self.author}: {self.contents}"
-    
-
