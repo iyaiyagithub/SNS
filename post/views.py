@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 from .models import Post
 from user.models import User as user_model
 from django.shortcuts import render, redirect
@@ -6,8 +7,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm
-from .models import Post
-
 
 # Create your views here.
 
@@ -87,3 +86,12 @@ def mypage_view(request, id):
             return render(request, 'user/profile', {"user_infoes": user_infoes})
         else:
             return redirect('user/signup.html')
+
+
+def search(request):
+    if request.user.is_authenticated:
+        if request.method == "GET":
+            search_keyword = request.GET.get("q", "")
+            posts = Post.objects.filter(caption__contains=search_keyword)
+
+            return render(request, 'post/main.html', {'posts': posts})

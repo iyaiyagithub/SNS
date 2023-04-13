@@ -1,0 +1,29 @@
+
+{% load static %}
+
+<div class="profile-box">
+    <div class="detail-box">
+        <!-- 프로필 사진 -->
+        <div class="photo-box">
+            <img src="{% static 'images/post/noavatar.png' %}" alt="profile_photo">
+        </div>
+        <!-- 성명 -->
+        <div class="profile-contents">
+            이름 : {{ user.name }}
+        </div>
+        <div class="profile-contents">
+            아이디 : {{ user.username }}
+        </div>
+        <div class="profile-contents">
+            소개 : {{ user.bio }}
+        </div>
+        <div class="profile-contents">
+            이메일 : {{ user.email }}
+        </div>
+        <div class="profile-contents">
+            <a href="#">수정하기</a>
+        </div>
+    </div>
+</div>
+
+

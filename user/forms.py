@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django import forms as django_forms
+from django.utils.translation import gettext_lazy as _
 
 
 User = get_user_model()
@@ -26,9 +27,6 @@ class SignUpForm(django_forms.ModelForm):
 
 
 class UserUpdateForm(django_forms.ModelForm):
-    name = django_forms.CharField()
-
     class Meta:
         model = User
-        
         fields = '__all__'
