@@ -17,17 +17,15 @@
                 <!-- 작성자정보 -->
                 <div id="post-create-user">
                   <header id="post-user">
-                    {% if post.author.profile_photo != None %}
-                    <div class="profile-user-photo">
-                      <a href="#" style="width: 32px; height: 32px">
-                        <span class="photo2">
-                          <img src="{{ post.author.profile_photo }}" alt="profile-photo"
-                            style="height: 42px; width: 42px" />
-                        </span>
-                      </a>
-                    </div>
+                    {% if post.author.profile_photo %}
+                    <a href="#">
+                      <span class="photo2">
+                        <img src="/media/{{ post.author.profile_photo }}" alt="profile-photo"
+                          style="height: 42px; width: 42px" />
+                      </span>
+                    </a>
                     {% else %}
-                    <a href="">
+                    <a href="#">
                       <span class="photo2">
                         <img src="{% static 'images/post/no_avatar.png' %}" alt="profile-no-photo"
                           style="height: 42px; width: 42px" />
