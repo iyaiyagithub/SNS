@@ -18,7 +18,7 @@ class Post(TimeStamedModel):
         on_delete=models.CASCADE,
         related_name='post_author'
     )
-    image = models.ImageField(blank=False, null=True)
+    image = models.ImageField(blank=True, null=True)
     caption = models.TextField(blank=False)
 
     def __str__(self):
