@@ -343,8 +343,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,windows,python,django
-=======
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,windows,python,django
->>>>>>> c02fd957bbbde1bcd9e1810ca3a8e037a534bf85

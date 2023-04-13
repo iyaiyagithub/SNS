@@ -34,7 +34,6 @@ def write_post(request):
     elif request.method == 'POST':
         user = get_object_or_404(user_model, pk=request.user.id)
         post_form = PostForm(request.POST, request.FILES)
-
         if post_form.is_valid():
             write_post = post_form.save(commit=False)
             write_post.author = user
