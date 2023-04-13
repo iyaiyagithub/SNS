@@ -458,3 +458,10 @@ a {
   padding: 0;
   box-sizing: border-box;
 }
+
+.caption-contents {
+  width: 100%;
+  border: 1px solid rgb(219, 219, 219);
+}
+
+

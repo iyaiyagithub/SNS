@@ -1,0 +1,25 @@
+{% extends "post/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="profile-detail-box">
+    <form action="{% url 'user:edit-profile' user.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <img id="preview-image" src="{% static 'images/post/mainlogo.png' %}" alt="dlalwl" class="profile-detail-photo">
+        {{ form.as_p }}
+        <div class="profile-detail-btn">
+            <input type="submit" value="수정하기">
+            <a href="{% url 'post:feed' %}">뒤로가기</a>
+        </div>
+    </form>
+</div>
+
+
+
+
+{% endblock content %}
+
+
+
