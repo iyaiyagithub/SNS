@@ -4,13 +4,141 @@
 
 {% block content %}
 
-{% for post in posts %}
-<a href="{% url 'post:post-detail' post.id %}">
-    <div>작성자: {{ post.author.username }}</div>
-    <div>작성일: {{ post.create_at }}</div>
-    <div>{{ post.caption }}</div>
-</a>
-{% endfor %}
+
+<main class="container">
+  {% for post in posts %}
+  <section id="post-form">
+    <div id="post-main">
+      <div id="post-main2">
+        <div id="post-main3">
+          <div id="post-main4">
+            <article id="post-form2">
+              <div id="post-content">
+                <!-- 작성자정보 -->
+                <div id="post-create-user">
+                  <header id="post-user">
+                    {% if post.author.profile_photo != None %}
+                    <div class="profile-user-photo">
+                      <a href="#" style="width: 32px; height: 32px">
+                        <span class="photo2">
+                          <img
+                            src="{{ post.author.profile_photo }}"
+                            alt="profile-photo"
+                            style="height: 42px; width: 42px"
+                          />
+                        </span>
+                      </a>
+                    </div>
+                    {% else %}
+                    <a href="">
+                      <span class="photo2">
+                        <img
+                          src="{% static 'images/post/no_avatar.png' %}"
+                          alt="profile-no-photo"
+                          style="height: 42px; width: 42px"
+                        />
+                      </span>
+                    </a>
+                    {% endif %}
+                    <div class="profile-name">
+                      <div class="profile-username">
+                        {{ post.author.username }}
+                      </div>
+                      {% if post.create_at != None %}
+                      <div class="profile-at"><span>•</span>수십년..</div>
+                      {% else %}
+                      <div class="profile-at">
+                        <span>•</span>{{ post.create_at|timesince }}
+                      </div>
+                      {% endif %}
+                    </div>
+                  </header>
+                </div>
+              </div>
+              <!-- 피드화면 -->
+              <div class="post-image1">
+                <div class="post-image2">
+                  <img
+                    src="{{ post.image }}"
+                    alt="post-image"
+                    crossorigin="anonymous"
+                    decoding="auto"
+                    sizes="468px"
+                    style="object-fit: cover"
+                  />
+                </div>
+              </div>
+              <div class="comment-box1">
+                <div class="comment-box2">
+                  <section class="like-i">
+                    <span class="like-i2">
+                      <button class="like-i3">
+                        {% if user.id in post.image_likes %}
+                        <div class="bi-heart2">
+                          <svg class="x1lliihq x1n2onr6" color="rgb(142, 142, 142)" fill="rgb(142, 142, 142)" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path></svg>
+                        </div>
+                        {% else %}
+                        <div class="bi-heart2">
+                          <svg class="x1lliihq x1n2onr6" color="rgb(38, 38, 38)" fill="rgb(38, 38, 38)" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path></svg>
+                          
+                        </div>
+                        {% endif %}
+                      </button>
+                    </span>
+                    <span class="like-i2">
+                        <button class="like-i3">
+                            <div class="bi-heart2">
+                              <svg aria-label="댓글 달기" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path></svg>
+                            </div>
+                        </button>
+                    </span>
+                  </section>
+                  <section class="count-like">
+                    <div class="count-like2">
+                      <span class="count-like3">좋아요 10만 개</span>
+                    </div>
+                  </section>
+                  <div class="post-caption-box">
+                    <div class="post-caption1">
+                      <div class="post-author-name2">
+                        <div class="post-author-name3">
+                          <a href="">{{ post.author.username }}</a>
+                        </div>
+                        <div class="caption-coment">
+                          {{ post.caption }}
+                        </div>
+                      </div>
+                      <div class="post-author-name2">
+                        <div class="post-author-name4">
+                          <a href="">댓글 작성자</a>
+                        </div>
+                        <div class="caption-coment2">
+                          ---------댓글 내용---------------
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 댓글입력 부분 -->
+                  <section class="comment-input">
+                    <div class="comment-input2">
+                      <form class="input-comment" action="">
+
+                        <textarea class="input-comment2" placeholder="댓글 달기.."></textarea>
+
+                      </form>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endfor %}
+</main>
 
 
-{% endblock content %}
+
+{% endblock %}
