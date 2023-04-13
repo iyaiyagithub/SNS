@@ -1,7 +1,7 @@
 {% extends "post/base.html" %}
 
 {% load static %}
-{% block title %}Profile Detail{% endblock title %}
+{% block title %}마이페이지{% endblock title %}
 {% block content %}
 
 <div>{% include "user/profile_views.html" %}</div>
@@ -18,33 +18,45 @@
                 <!-- 작성자정보 -->
                 <div id="post-create-user">
                   <header id="post-user">
+                    {% if post.author.profile_photo %}
                     <a href="#">
                       <span class="photo2">
-                        <img src="{{ post.author.profile_photo }}" alt="profile-photo"
+                        <img src="{{ post.author.profile_photo.url }}" alt="profile-photo"
                           style="height: 42px; width: 42px" />
                       </span>
-                    </a>         
+                    </a>
+                    {% else %}
+                    <a href="#">
+                      <span class="photo2">
+                        <img src="{% static 'images/post/noavatar.png' %}" alt="profile-no-photo"
+                          style="height: 42px; width: 42px" />
+                      </span>
+                    </a>
+                    {% endif %}
                     <div class="profile-name">
                       <div class="profile-username">
                         {{ post.author.username }}
                       </div>
-                      {% if post.create_at != None %}
-                      <div class="profile-at"><span>•</span>수십년..</div>
-                      {% else %}
                       <div class="profile-at">
                         <span>•</span>{{ post.create_at|timesince }}
                       </div>
-                      {% endif %}
                     </div>
                   </header>
                 </div>
               </div>
               <!-- 피드화면 -->
               <div class="post-image1">
+                {% if post.image %}
                 <div class="post-image2">
-                  <img src="media/{{ post.image }}" alt="post-image" crossorigin="anonymous" decoding="auto"
-                    sizes="468px" style="object-fit: cover" />
+                  <img src="{{ post.image.url }}" alt="post-image" crossorigin="anonymous" decoding="auto" sizes="468px"
+                    style="object-fit: cover" />
                 </div>
+                {% else %}
+                <div class="post-image2">
+                  <img src="{% static 'images/post/mainlogo.png' %}" alt="post-image" crossorigin="anonymous"
+                    decoding="auto" sizes="468px" style="object-fit: cover" />
+                </div>
+                {% endif %}
               </div>
               <div class="comment-box1">
                 <div class="comment-box2">
