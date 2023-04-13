@@ -67,14 +67,15 @@ def post_list(request):
 
 """피드 페이지 """
 def user_feed(request):
-    user = request.user.is_authenticated
-    if request.method == 'GET':
-        if user:
-            post_list = Post.objects.all().order_by('-created_at')
-            return render(request, 'feed-page.html', {'posts': post_list})
-        else:
-            return redirect('user/signup.html')
-
+    # user = request.user.is_authenticated
+    # if request.method == 'GET':
+    #     if user:
+    #         post_list = Post.objects.all().order_by('-created_at')
+    #         return render(request, 'feed-page.html', {'posts': post_list})
+    #     else:
+    #         return redirect('user/signup.html')
+    post_list = Post.objects.all().order_by()
+    return render(request, 'post/feed-page.html', {'posts': post_list})
 
 """마이페이지를 보여주는 함수 이름,프로필,프사,이메일"""
 def mypage_view(request, id):
