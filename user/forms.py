@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django import forms as django_forms
 
+
 User = get_user_model()
 
 
@@ -16,17 +17,18 @@ class SignUpForm(django_forms.ModelForm):
             'password': django_forms.PasswordInput(attrs={'class': 'get-input', 'placeholder': '비밀번호'}),
         }
 
-
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()
         return user
-    
 
-class ProfileUpdateForm(django_forms.ModelForm):
+
+class UserUpdateForm(django_forms.ModelForm):
+    name = django_forms.CharField()
 
     class Meta:
         model = User
+        
         fields = '__all__'

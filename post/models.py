@@ -4,7 +4,8 @@ from user import models as user_model
 
 class TimeStamedModel(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(
+        auto_now=True)  # 업데이트는 auto_now = True 사용
 
     class Meta:
         abstract = True
@@ -17,9 +18,8 @@ class Post(TimeStamedModel):
         on_delete=models.CASCADE,
         related_name='post_author'
     )
-    image = models.ImageField(blank=False)
+    image = models.ImageField(blank=True, null=True, upload_to="")
     caption = models.TextField(blank=False)
-
 
     def __str__(self):
         return f"{self.author}: {self.caption}"
@@ -42,3 +42,5 @@ class Comment(TimeStamedModel):
 
     def __str__(self):
         return f"{self.author}: {self.contents}"
+    
+

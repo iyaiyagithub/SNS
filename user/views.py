@@ -1,11 +1,12 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
-from .models import User as user_model
+from django.contrib.auth.models import User
+from .forms import UserUpdateForm
 
 
 def main(request):
@@ -13,16 +14,17 @@ def main(request):
         return render(request, 'user/main.html')
 
     elif request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(request, username=username, password=password)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
 
-            if user is not None:
-                login(request, user)
-                return HttpResponseRedirect(reverse('post:postMain'))
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('post:postMain'))
 
-            else:
-                return render(request, 'user/main.html')
+        else:
+            return render(request, 'user/main.html')
+
 
 def signup(request):
     if request.method == 'GET':
@@ -45,10 +47,9 @@ def signup(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse('post:postMain'))
 
-
         return render(request, 'user/main.html')
-    
-    
+
+
 @login_required
 def logout(request):
     auth.logout(request)
@@ -56,11 +57,17 @@ def logout(request):
 
 
 @login_required
-def profile(request, id):
-    user = get_object_or_404(user_model, id=request.user.id)
+def profile_detail(request):
+    user = request.user
     return render(request, 'user/profile_detail.html', {'user': user})
 
 
-
-# 1. 본인 프로필
-# 2. post 작성한 프로필
+@login_required
+def profile_update(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '프로필 업데이트 완료')
+            return redirect('user:profile_detail')
+    return render(request, 'user/profile_update.html')
