@@ -11,7 +11,10 @@ from .forms import UserUpdateForm
 
 def main(request):
     if request.method == 'GET':
-        return render(request, 'user/main.html')
+        if login:
+            return HttpResponseRedirect(reverse('post:main'))
+        else:
+            return render(request, 'user/main.html')
 
     elif request.method == 'POST':
         username = request.POST['username']
@@ -20,7 +23,7 @@ def main(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('post:postMain'))
+            return HttpResponseRedirect(reverse('post:main'))
 
         else:
             return render(request, 'user/main.html')
@@ -45,7 +48,7 @@ def signup(request):
 
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(reverse('post:postMain'))
+                return HttpResponseRedirect(reverse('post:main'))
 
         return render(request, 'user/main.html')
 
