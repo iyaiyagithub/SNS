@@ -16,34 +16,13 @@
               <div id="post-content">
                 <!-- 작성자정보 -->
                 <div id="post-create-user">
-<<<<<<< HEAD
-                  <header id="post-user">
-                    {% if post.author.profile_photo %}
-                    <a href="#">
-                      <span class="photo2">
-                        <img src="/media/{{ post.author.profile_photo }}" alt="profile-photo"
-                          style="height: 42px; width: 42px" />
-                      </span>
-                    </a>
-                    {% else %}
-                    <a href="#">
-                      <span class="photo2">
-                        <img src="{% static 'images/post/no_avatar.png' %}" alt="profile-no-photo"
-                          style="height: 42px; width: 42px" />
-                      </span>
-                    </a>
-                    {% endif %}
-                    <div class="profile-name">
-                      <div class="profile-username">
-                        {{ post.author.username }}
-=======
 
                     <header class="head-main-box">
                       <div id="post-user">
-                        {% if post.author.profile_photo != None %}
+                        {% if post.author.profile_photo %}
                         <a href="#">
                           <span class="photo2">
-                            <img src="{{ post.author.profile_photo }}" alt="profile-photo"
+                            <img src="/media/{{ post.author.profile_photo }}" alt="profile-photo"
                               style="height: 42px; width: 42px" />
                           </span>
                         </a>
@@ -59,7 +38,7 @@
                           <div class="profile-username">
                             {{ post.author.username }}
                           </div>
-                          {% if post.create_at != None %}
+                          {% if not post.create_at %}
                           <div class="profile-at"><span>•</span>수십년..</div>
                           {% else %}
                           <div class="profile-at">
@@ -67,7 +46,6 @@
                           </div>
                           {% endif %}
                         </div>
->>>>>>> 914fc55eb5bdd24600c9163ed1b08a4b481e89aa
                       </div>
                       <!-- 수정,삭제 버튼 -->
                       <div class="edit-del">
@@ -167,7 +145,7 @@
                           <a href="">댓글 작성자</a>
                         </div>
                         <div class="caption-coment2">
-                          ---------댓글 내용---------------
+                          {% comment %} ---------댓글 내용--------------- {% endcomment %}
                         </div>
                       </div>
                     </div>

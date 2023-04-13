@@ -22,18 +22,18 @@ def write_post(request):
     """게시글을 작성하는 함수"""
     if request.method == 'GET':
         post_form = PostForm()
+        
         return render(request, 'post/write-post.html', {'posts': post_form})
 
     elif request.method == 'POST':
         post_form = PostForm(request.POST, request.FILES)
-
         if post_form.is_valid():
             write_post = post_form.save(commit=False)
             write_post.author = request.user
             write_post.save()
-            return redirect('post:main')
+            return redirect('post:feed')
         else:
-            return redirect('https://www.naver.com/')
+            return redirect('/')
 
 
 @login_required(login_url='')

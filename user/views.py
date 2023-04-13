@@ -27,7 +27,7 @@ def main(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('post:main'))
+            return HttpResponseRedirect(reverse('post:feed'))
 
     return render(request, 'user/main.html')
 
@@ -51,7 +51,7 @@ def signup(request):
 
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(reverse('post:main'))
+                return HttpResponseRedirect(reverse('post:feed'))
 
         return render(request, 'user/main.html')
 
