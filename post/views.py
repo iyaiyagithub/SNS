@@ -11,6 +11,13 @@ from .forms import PostForm
 # Create your views here.
 
 
+def post_views(request):
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            posts = Post.objects.order_by('-id')
+            return render(request, 'post/main.html', {'posts': posts})
+
+
 def post_detail(request, id):
     user = get_object_or_404(user_model, id=request.user.id)
     my_post = Post.objects.get(id=user.id)
@@ -21,19 +28,19 @@ def post_detail(request, id):
 def write_post(request):
     """게시글을 작성하는 함수"""
     if request.method == 'GET':
-        post_form = PostForm()
-        
-        return render(request, 'post/write-post.html', {'posts': post_form})
+        form = PostForm()
+        return render(request, 'post/write-post.html', {'form': form})
 
     elif request.method == 'POST':
+        user = get_object_or_404(user_model, pk=request.user.id)
         post_form = PostForm(request.POST, request.FILES)
         if post_form.is_valid():
             write_post = post_form.save(commit=False)
-            write_post.author = request.user
+            write_post.author = user
             write_post.save()
             return redirect('post:feed')
         else:
-            return redirect('/')
+            return redirect('user:signup')
 
 
 @login_required(login_url='')

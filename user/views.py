@@ -14,11 +14,8 @@ from post import models
 
 def main(request):
     if request.method == 'GET':
-        user = request.user.is_authenticated
-        if user:
-            return HttpResponseRedirect(reverse('post:feed'))
-        else:
-            return render(request, 'user/main.html')
+        if request.user.is_authenticated:
+            return render(request, 'post/base.html')
 
     elif request.method == 'POST':
         username = request.POST['username']
