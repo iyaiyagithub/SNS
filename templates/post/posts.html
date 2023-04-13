@@ -17,28 +17,30 @@
               <div id="post-content">
                 <!-- 작성자정보 -->
                 <div id="post-create-user">
-                  <header id="post-user">
-                    {% if post.author.profile_photo %}
-                    <a href="#">
-                      <span class="photo2">
-                        <img src="{{ post.author.profile_photo.url }}" alt="profile-photo"
-                          style="height: 42px; width: 42px" />
-                      </span>
-                    </a>
-                    {% else %}
-                    <a href="#">
-                      <span class="photo2">
-                        <img src="{% static 'images/post/noavatar.png' %}" alt="profile-no-photo"
-                          style="height: 42px; width: 42px" />
-                      </span>
-                    </a>
-                    {% endif %}
-                    <div class="profile-name">
-                      <div class="profile-username">
-                        {{ post.author.username }}
-                      </div>
-                      <div class="profile-at">
-                        <span>•</span>{{ post.create_at|timesince }} 전
+                  <header class="head-main-box">
+                    <div id="post-user">
+                      {% if post.author.profile_photo %}
+                      <a href="#">
+                        <span class="photo2">
+                          <img src="{{ post.author.profile_photo.url }}" alt="profile-photo"
+                            style="height: 42px; width: 42px" />
+                        </span>
+                      </a>
+                      {% else %}
+                      <a href="#">
+                        <span class="photo2">
+                          <img src="{% static 'images/post/noavatar.png' %}" alt="profile-no-photo"
+                            style="height: 42px; width: 42px" />
+                        </span>
+                      </a>
+                      {% endif %}
+                      <div class="profile-name">
+                        <div class="profile-username">
+                          {{ post.author.username }}
+                        </div>
+                        <div class="profile-at">
+                          <span>•</span>{{ post.create_at|timesince }} 전
+                        </div>
                       </div>
                     </div>
                     <!-- 수정,삭제 버튼 -->

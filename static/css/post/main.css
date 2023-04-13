@@ -135,8 +135,6 @@ a {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  position: absolute;
-  right: 0;
 }
 
 .edit-del-btn {
