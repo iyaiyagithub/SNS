@@ -16,13 +16,24 @@
                                     <div class="media-body">
                                         <h5 class="mt-0">나의 이야기를 적어주세요</h5>
                                         <p>
-                                        <form action="{% url 'post:write-post' %}" method="POST" enctype="multipart/form-data">
+                                            {% if edit %}
+                                        <form method="post" enctype="multipart/form-data">
                                             {% csrf_token %}
                                             {{ form.as_p }}
-
-                                            <input type="submit" class="btn btn-primary" style="float:right;" value="작성하기">
-                                            <a href="">뒤로가기</a>
+                                            <input action="/post/post-detail/{{ post.id }}" type="submit"
+                                                class="btn btn-primary" style="float:right;" value="수정하기">
+                                            <a href="{% url 'post:feed' %}">뒤로가기</a>
                                         </form>
+                                        {% else %}
+                                        <form action="{% url 'post:write-post' %}" method="POST"
+                                            enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                            <input type="submit" class="btn btn-primary" style="float:right;"
+                                                value="작성하기">
+                                            <a href="{% url 'post:feed' %}">뒤로가기</a>
+                                        </form>
+                                        {% endif %}
                                         </p>
                                     </div>
                                 </div>
@@ -33,6 +44,6 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-{% endblock content %}
+    {% endblock content %}

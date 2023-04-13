@@ -48,7 +48,7 @@
                     <div class="edit-del">
                       <!-- 수정버튼 -->
                       <div class="edit-del-btn">
-                        <a href="">
+                        <a href="/post/edit-post/{{ post.id }}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-pencil-square" viewBox="0 0 16 16" color="rgb(0, 0, 0)">
                             <path
@@ -60,7 +60,7 @@
                       </div>
                       <!-- 삭제버튼 -->
                       <div class="edit-del-btn">
-                        <a href="">
+                        <a href="/post/delete-post/{{ post.id }}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16" color="rgb(0, 0, 0)">
                             <path
@@ -117,14 +117,16 @@
                       </button>
                     </span>
                     <span class="like-i2">
-                      <button class="like-i3">
-                        <div class="bi-heart2">
-                          <svg aria-label="댓글 달기" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)"
-                            height="24" role="img" viewBox="0 0 24 24" width="24">
-                            <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none"
-                              stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
-                          </svg>
-                        </div>
+                      <form action="/post/post-detail/{{ post.id }}">
+                        <button class="like-i3">
+                      </form>
+                      <div class="bi-heart2">
+                        <svg aria-label="댓글 달기" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)"
+                          height="24" role="img" viewBox="0 0 24 24" width="24">
+                          <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor"
+                            stroke-linejoin="round" stroke-width="2"></path>
+                        </svg>
+                      </div>
                       </button>
                     </span>
                   </section>
