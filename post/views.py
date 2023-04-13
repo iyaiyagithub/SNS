@@ -71,15 +71,11 @@ def delete_post(request, id):
 """피드 페이지 """
 
 
+@login_required(login_url='')
 def user_feed(request):
-    user = request.user.is_authenticated
     if request.method == 'GET':
-        if user:
-            post_list = Post.objects.all().order_by('-id')
-            return render(request, 'post/main.html', {'posts': post_list})
-        else:
-            return redirect('user/signup.html')
-        # d
+        post_list = Post.objects.all().order_by('-id')
+        return render(request, 'post/posts.html', {'posts': post_list})
 
 
 """마이페이지를 보여주는 함수 이름,프로필,프사,이메일"""

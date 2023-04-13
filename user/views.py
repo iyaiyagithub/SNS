@@ -60,12 +60,11 @@ def logout(request):
 
 
 @login_required
-def profile_detail(request):
-    if request.user.is_authenticated:
-        if request.method == "GET":
-            user = get_object_or_404(models_user, pk=request.user.id)
-            posts = models.Post.objects.filter(author=user)
-            return render(request, 'user/profile_detail.html', {'user': user, "posts": posts})
+def my_posts(request):
+    if request.method == "GET":
+        user = get_object_or_404(models_user, pk=request.user.id)
+        posts = models.Post.objects.filter(author=user).order_by('-id')
+        return render(request, 'post/posts.html', {'user': user, "posts": posts})
 
 
 @login_required
@@ -75,26 +74,25 @@ def profile_update(request):
         if form.is_valid():
             form.save()
             messages.success(request, '프로필 업데이트 완료')
-            return redirect('user:profile_detail')
+            return redirect('user:my-posts')
     return render(request, 'user/profile_update.html')
 
 
-
+@login_required
 def edit_profile(request, user_id):
-    if request.user.is_authenticated:
-        user = get_object_or_404(models_user, pk=user_id)
-        if user:
-            # 로그인한 유저가 맞다면
-            if request.method == "GET":
-                form = UserUpdateForm(instance=user)
-                return render(request, 'user/profile_edit.html', {"form": form})
-            elif request.method == "POST":
-                forms = UserUpdateForm(request.POST, instance=user)
-                if forms.is_valid():
-                    forms.save()
-            
-                return redirect(reverse('post:feed'))
+    user = get_object_or_404(models_user, pk=user_id)
+    if user:
+        # 로그인한 유저가 맞다면
+        if request.method == "GET":
+            form = UserUpdateForm(instance=user)
+            return render(request, 'user/profile_edit.html', {"form": form})
+        elif request.method == "POST":
+            forms = UserUpdateForm(request.POST, instance=user)
+            if forms.is_valid():
+                forms.save()
 
-        else:
-            # 로그인한 유저와 다르면
-            return redirect('post:feed')
+            return redirect(reverse('post:feed'))
+
+    else:
+        # 로그인한 유저와 다르면
+        return redirect('post:feed')
