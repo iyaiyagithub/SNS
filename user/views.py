@@ -87,7 +87,7 @@ def edit_profile(request, user_id):
             form = UserUpdateForm(instance=user)
             return render(request, 'user/profile_edit.html', {"form": form})
         elif request.method == "POST":
-            forms = UserUpdateForm(request.POST, instance=user)
+            forms = UserUpdateForm(request.POST, request.FILES, instance=user)
             if forms.is_valid():
                 forms.save()
 

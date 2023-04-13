@@ -32,19 +32,16 @@ class UserUpdateForm(django_forms.ModelForm):
         fields = ['profile_photo', 'name', 'user_name', 'bio', 'email']
         labels = {
             'profile_photo': '',
-            'name': '', 
-            'user_name': '', 
-            'bio': '', 
+            'name': '',
+            'user_name': '',
+            'bio': '',
             'email': '',
-            }
-        
-        widgets = {
-            'profile_photo': django_forms.FileInput(attrs={'id': 'input-image'}),
-            'name': django_forms.TextInput(attrs={'class': 'profile-detail-input', 'placeholder': '성명'}), 
-            'user_name': django_forms.TextInput(attrs={'class': 'profile-detail-input', 'placeholder': '사용자 이름'}), 
-            'bio': django_forms.Textarea(attrs={'class': 'profile-detail-input', 'placeholder': '자기 소개'}), 
-            'email': django_forms.TextInput(attrs={'class': 'profile-detail-input', 'placeholder': '이메일 주소'}),
         }
 
-
-        
+        widgets = {
+            'profile_photo': django_forms.FileInput(attrs={'id': 'input-image'}),
+            'name': django_forms.TextInput(attrs={'class': 'profile-detail-input', 'placeholder': '성명'}),
+            'user_name': django_forms.TextInput(attrs={'class': 'profile-detail-input', 'placeholder': '닉네임'}),
+            'bio': django_forms.Textarea(attrs={'class': 'profile-detail-input', 'placeholder': '자기 소개'}),
+            'email': django_forms.TextInput(attrs={'class': 'profile-detail-input', 'placeholder': '이메일 주소'}),
+        }
