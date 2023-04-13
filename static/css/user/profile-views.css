@@ -41,3 +41,32 @@
 .profile-contents {
     margin-top: 12px;
 }
+
+.profile-contents2 {
+    margin-top: 24px;
+    display: flex;
+    justify-content: right;
+}
+
+.profile-contents2 a {
+    margin-top: 12px;
+    background-color: rgb(214, 214, 214);
+    border: 1px solid rgb(238, 238, 238);
+    border-radius: 8px;
+    text-decoration: none;
+    border: 0;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: inherit;
+    box-sizing: border-box;
+    color: black;
+    padding: 4px 12px;
+
+}
+
+
+@media screen and (max-width: 1080px) {
+    .profile-box {
+        display: none;
+    }
+}

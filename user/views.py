@@ -77,3 +77,24 @@ def profile_update(request):
             messages.success(request, '프로필 업데이트 완료')
             return redirect('user:profile_detail')
     return render(request, 'user/profile_update.html')
+
+
+
+def edit_profile(request, user_id):
+    if request.user.is_authenticated:
+        user = get_object_or_404(models_user, pk=user_id)
+        if user:
+            # 로그인한 유저가 맞다면
+            if request.method == "GET":
+                form = UserUpdateForm(instance=user)
+                return render(request, 'user/profile_edit.html', {"form": form})
+            elif request.method == "POST":
+                forms = UserUpdateForm(request.POST, instance=user)
+                if forms.is_valid():
+                    forms.save()
+            
+                return redirect(reverse('post:feed'))
+
+        else:
+            # 로그인한 유저와 다르면
+            return redirect('post:feed')
