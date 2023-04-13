@@ -199,6 +199,7 @@ a {
   justify-content: flex-start;
   flex-grow: 0;
   overflow: visible;
+  font-size: 14px;
 }
 
 .profile-at span {
@@ -207,7 +208,6 @@ a {
   color: rgb(115, 115, 115);
   display: inline;
   line-height: 18px;
-  font-size: 14px;
   word-wrap: break-word;
   white-space: pre-line;
   word-wrap: break-word;

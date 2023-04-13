@@ -28,19 +28,20 @@ def post_detail(request, id):
 def write_post(request):
     """게시글을 작성하는 함수"""
     if request.method == 'GET':
-        post_form = PostForm()
-        return render(request, 'post/write-post.html', {'posts': post_form})
+        form = PostForm()
+        return render(request, 'post/write-post.html', {'form': form})
 
     elif request.method == 'POST':
+        user = get_object_or_404(user_model, pk=request.user.id)
         post_form = PostForm(request.POST, request.FILES)
 
         if post_form.is_valid():
             write_post = post_form.save(commit=False)
-            write_post.author = request.user
+            write_post.author = user
             write_post.save()
-            return redirect('post:main')
+            return redirect('post:feed')
         else:
-            return redirect('https://www.naver.com/')
+            return redirect('user:signup')
 
 
 @login_required(login_url='')
