@@ -38,10 +38,12 @@ def write_post(request):
             write_post = post_form.save(commit=False)
             write_post.author = request.user
             write_post.save()
-            # 어디로 이동해야 하는지 모르겠음
-            return render(request, 'feed-page.html', {'posts': post_list})
+            return redirect('post:main')
+        else:
+            return redirect('https://www.naver.com/')
 
 
+@login_required(login_url='')
 def edit_post(request, id):
     """게시글을 수정하는 함수"""
     edit_post = Post.objects.get(id=id)
@@ -57,19 +59,13 @@ def edit_post(request, id):
         return redirect('/edit-post/'+str(current_edit_post))
 
 
+@login_required(login_url='')
 def delete_post(request, id):
     """게시글을 삭제하는 함수"""
     delete_post = Post.objects.get(id=id)
     current_delete_post = delete_post.id
     delete_post.delete()
     return redirect('/delete-post/'+str(current_delete_post))
-
-
-def post_list(request):
-    user = request.user.is_authenticated
-    if user:
-        post_list = Post.objects
-        return render(request, 'post/main.html', {'posts': post_list})
 
 
 """피드 페이지 """
@@ -79,8 +75,8 @@ def user_feed(request):
     user = request.user.is_authenticated
     if request.method == 'GET':
         if user:
-            post_list = Post.objects.all().order_by('-created_at')
-            return render(request, 'feed-page.html', {'posts': post_list})
+            post_list = Post.objects.all().order_by('-id')
+            return render(request, 'post/main.html', {'posts': post_list})
         else:
             return redirect('user/signup.html')
         # d

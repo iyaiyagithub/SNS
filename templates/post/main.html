@@ -74,10 +74,17 @@
               </div>
               <!-- 피드화면 -->
               <div class="post-image1">
+                {% if post.image %}
                 <div class="post-image2">
                   <img src="media/{{ post.image }}" alt="post-image" crossorigin="anonymous" decoding="auto"
                     sizes="468px" style="object-fit: cover" />
                 </div>
+                {% else %}
+                <div class="post-image2">
+                  <img src="{% static 'images/post/mainlogo.png' %}" alt="post-image" crossorigin="anonymous"
+                    decoding="auto" sizes="468px" style="object-fit: cover" />
+                </div>
+                {% endif %}
               </div>
               <div class="comment-box1">
                 <div class="comment-box2">
