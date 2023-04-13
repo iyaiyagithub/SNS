@@ -11,8 +11,9 @@ from .forms import UserUpdateForm
 
 def main(request):
     if request.method == 'GET':
-        if login:
-            return HttpResponseRedirect(reverse('post:main'))
+        user = request.user.is_authenticated
+        if user:
+            return HttpResponseRedirect(reverse('post:feed'))
         else:
             return render(request, 'user/main.html')
 
@@ -23,7 +24,7 @@ def main(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('post:main'))
+            return redirect('/post')
 
         else:
             return render(request, 'user/main.html')
@@ -48,7 +49,7 @@ def signup(request):
 
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect(reverse('post:main'))
+                return HttpResponseRedirect(reverse('post:feed'))
 
         return render(request, 'user/main.html')
 
@@ -56,7 +57,7 @@ def signup(request):
 @login_required
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('user:login'))
+    return HttpResponseRedirect(reverse('user:main'))
 
 
 @login_required
