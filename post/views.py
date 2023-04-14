@@ -9,6 +9,7 @@ from user.models import User as user_model
 from . import serializers
 
 from django.http import JsonResponse
+from django.db.models import Count
 
 # Create your views here.
 
@@ -42,10 +43,9 @@ def write_post(request):
 
 
 @login_required(login_url='')
-def edit_post(request, id):
+def edit_post(request, post_id):
     """게시글을 수정하는 함수"""
-    edit_post = Post.objects.get(id=id)
-    current_edit_post = edit_post.id
+    edit_post = get_object_or_404(Post, pk=post_id)
 
     if request.method == 'GET':
         edit_form = PostForm(instance=edit_post)
@@ -61,7 +61,7 @@ def edit_post(request, id):
         if edit_form.is_valid():
             edit_post = edit_form.save(commit=False)
             edit_post.author = user
-            edit_post.id = current_edit_post
+            edit_post.caption = edit_form.cleaned_data['caption']
             edit_post.save()
             return redirect(reverse('post:feed')+ "#post-" + str(edit_post.id))
 
@@ -85,9 +85,15 @@ def user_feed(request):
         comment_form = CommentForm()
         post_list = Post.objects.all().order_by('-id')
 
+
         serializer = serializers.PostSerializer(post_list, many=True)
         
-        return render(request, 'post/posts.html', {'posts': serializer.data, 'comment_form': comment_form})
+        context = {
+            'posts': serializer.data, 
+            'comment_form': comment_form,
+        }
+
+        return render(request, 'post/posts.html', context)
 
 
 """마이페이지를 보여주는 함수 이름,프로필,프사,이메일"""
@@ -113,7 +119,11 @@ def search(request):
             posts = Post.objects.filter(caption__contains=search_keyword)
 
             serializer = serializers.PostSerializer(posts, many=True)
-            return render(request, 'post/posts.html', {'posts': serializer.data, 'comment_form': comment_form})
+            context = {
+                'posts': serializer.data,
+                'comment_form': comment_form,
+            }
+            return render(request, 'post/posts.html', context)
 
 
 @login_required(login_url='')
@@ -126,7 +136,7 @@ def comment_create(request, post_id):
         comment.posts = post
         comment.save()
 
-        return redirect(reverse('post:feed') + "#comment-" + str(comment.id))
+        return redirect(reverse('post:feed') + "#post-" + str(post.id))
     
     else :
         post_list = Post.objects.all().order_by('-id')

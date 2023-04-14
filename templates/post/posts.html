@@ -19,21 +19,17 @@
                 <!-- 작성자정보 -->
                 <div id="post-create-user">
                   <header class="head-main-box">
-                    <div id="post-user">
+                    <div class="post-user">
                       {% if post.author.profile_photo %}
-                      <a href="#">
-                        <span class="photo2">
-                          <img src="{{ post.author.profile_photo }}" alt="profile-photo"
-                            style="height: 42px; width: 42px" />
-                        </span>
-                      </a>
+                      <span class="photo2" id="profile_view_modal">
+                        <img src="{{ post.author.profile_photo }}" alt="profile-photo"
+                          style="height: 42px; width: 42px; border-radius: 50%;" />
+                      </span>
                       {% else %}
-                      <a href="#">
-                        <span class="photo2">
-                          <img src="{% static 'images/post/noavatar.png' %}" alt="profile-no-photo"
-                            style="height: 42px; width: 42px" />
-                        </span>
-                      </a>
+                      <span class="photo2" id="profile_view_modal">
+                        <img src="{% static 'images/post/noavatar.png' %}" alt="profile-no-photo"
+                          style="height: 42px; width: 42px; border-radius: 50%;" />
+                      </span>
                       {% endif %}
                       <div class="profile-name">
                         <div class="profile-username">
@@ -49,7 +45,7 @@
                     <div class="edit-del">
                       <!-- 수정버튼 -->
                       <div class="edit-del-btn">
-                        <a href="/post/edit-post/{{ post.id }}">
+                        <a href="{% url 'post:edit-post' post.id %}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-pencil-square" viewBox="0 0 16 16" color="rgb(0, 0, 0)">
                             <path
@@ -146,37 +142,47 @@
                         </div>
                       </div>
                       
-                      {% for comment in post.comment_post %}
                       
-                      <div class="conntent-box">
-                        <div class="post-author-name2">
-                          <div class="post-author-name4">
-                            <a href="#">{{ comment.author.username }}</a>
+                      <div id="comments">
+                        {% for comment in post.comment_post %}
+                        <div class="conntent-box" id="{{ comment.id }}">
+                          <div class="post-author-name2">
+                            <div class="post-author-name4">
+                              <a href="#">{{ comment.author.username }}</a>
+                            </div>
+                            <div class="caption-coment2" id="comment-{{ comment.id }}">
+                              {{ comment.contents }}
+                            </div>
                           </div>
-                          <div class="caption-coment2" id="comment-{{ comment.id }}">
-                            {{ comment.contents }}
+                          <div>
+                            {% if user.id == comment.author.id %}
+                            <a href="{% url 'post:comment_delete' comment.id %}" onclick="return confirm('삭제할까요?');">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                class="bi bi-trash3"
+                                viewBox="0 0 16 16"
+                              >
+                                <path
+                                  d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
+                                />
+                              </svg>
+                            </a>
+                            {% endif %}
                           </div>
                         </div>
-                        <div>
-                          {% if user.id == comment.author.id %}
-                          <a href="{% url 'post:comment_delete' comment.id %}" onclick="return confirm('삭제할까요?');">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              class="bi bi-trash3"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
-                              />
-                            </svg>
-                          </a>
-                          {% endif %}
+                        {% endfor %}
+                        <div class="comment_all" >
+                          <button id="{{ post.id }}" type="button" onclick="commentViewAll(this.id)">댓글 모두 보기</button>
                         </div>
                       </div>
-                      {% endfor %}
+                      
+ 
+                      <!-- {% if comment_post.count %}
+                      <a href="">댓글 {{ comment_post.count }}개 모두보기</a>
+                      {% endif %} -->
                       <!-- 댓글 입력 부분 -->
                       <section class="comment-input">
                         <div class="comment-input2">
@@ -197,6 +203,7 @@
     </div>
   </section>
   {% endfor %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </main>
 
 {% endblock content %}
