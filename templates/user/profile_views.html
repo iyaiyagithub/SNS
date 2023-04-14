@@ -3,16 +3,21 @@
 <div class="profile-box">
     <div class="detail-box">
         <!-- 프로필 사진 -->
-
+        {% if user.profile_photo %}
+        <div class="photo-box">
+            <img src="{{ user.profile_photo.url }}" alt="profile_photo">
+        </div>
+        {% else %}
         <div class="photo-box">
             <img src="{% static 'images/post/noavatar.png' %}" alt="profile_photo">
         </div>
+        {% endif %}
         <!-- 성명 -->
         <div class="profile-contents">
             이름 : {{ user.name }}
         </div>
         <div class="profile-contents">
-            아이디 : {{ user.username }}
+            닉네임 : {{ user.user_name }}
         </div>
         <div class="profile-contents">
             소개 : {{ user.bio }}

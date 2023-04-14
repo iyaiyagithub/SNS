@@ -5,7 +5,7 @@
         <div class="nav-box">
             <div class="logo-bax">
                 <div class="logo">
-                    <a><img src="{% static 'images/post/mainlogo.png' %}" alt="logo" /></a>
+                    <a href="{% url 'post:feed' %}"><img src="{% static 'images/post/mainlogo.png' %}" alt="logo" /></a>
                 </div>
             </div>
             <div>
@@ -26,7 +26,7 @@
                         </a>
                     </div>
                     <div class="nav-content">
-                        <a href="{% url 'user:profile-detail' %}">
+                        <a href="{% url 'user:my-posts' %}">
                             <div class="nav-content2">
                                 <div class="nav-content-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="rgb(0, 0, 0)"
@@ -71,7 +71,8 @@
                             </div>
                             <div class="nav-content-name">
                                 <form action="{% url 'post:post_search' %}" class="search" method="GET">
-                                    <input aria-label="검색" autocapitalize="none" class="search" placeholder="검색" type="text" name="q">
+                                    <input aria-label="검색" autocapitalize="none" class="search" placeholder="검색"
+                                        type="text" name="q">
                                 </form>
                             </div>
                         </div>

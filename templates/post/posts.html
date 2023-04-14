@@ -1,7 +1,7 @@
 {% extends "post/base.html" %}
 
 {% load static %}
-{% block title %}마이페이지{% endblock title %}
+{% block title %}A-Yo SNS{% endblock title %}
 {% block content %}
 
 <div>{% include "user/profile_views.html" %}</div>
@@ -17,30 +17,61 @@
               <div id="post-content">
                 <!-- 작성자정보 -->
                 <div id="post-create-user">
-                  <header id="post-user">
-                    {% if post.author.profile_photo %}
-                    <a href="#">
-                      <span class="photo2">
-                        <img src="{{ post.author.profile_photo.url }}" alt="profile-photo"
-                          style="height: 42px; width: 42px" />
-                      </span>
-                    </a>
-                    {% else %}
-                    <a href="#">
-                      <span class="photo2">
-                        <img src="{% static 'images/post/noavatar.png' %}" alt="profile-no-photo"
-                          style="height: 42px; width: 42px" />
-                      </span>
-                    </a>
-                    {% endif %}
-                    <div class="profile-name">
-                      <div class="profile-username">
-                        {{ post.author.username }}
-                      </div>
-                      <div class="profile-at">
-                        <span>•</span>{{ post.create_at|timesince }} 전
+                  <header class="head-main-box">
+                    <div id="post-user">
+                      {% if post.author.profile_photo %}
+                      <a href="#">
+                        <span class="photo2">
+                          <img src="{{ post.author.profile_photo.url }}" alt="profile-photo"
+                            style="height: 42px; width: 42px" />
+                        </span>
+                      </a>
+                      {% else %}
+                      <a href="#">
+                        <span class="photo2">
+                          <img src="{% static 'images/post/noavatar.png' %}" alt="profile-no-photo"
+                            style="height: 42px; width: 42px" />
+                        </span>
+                      </a>
+                      {% endif %}
+                      <div class="profile-name">
+                        <div class="profile-username">
+                          {{ post.author.username }}
+                        </div>
+                        <div class="profile-at">
+                          <span>•</span>{{ post.create_at|timesince }} 전
+                        </div>
                       </div>
                     </div>
+                    <!-- 수정,삭제 버튼 -->
+                    {% if post.author == user %}
+                    <div class="edit-del">
+                      <!-- 수정버튼 -->
+                      <div class="edit-del-btn">
+                        <a href="/post/edit-post/{{ post.id }}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-pencil-square" viewBox="0 0 16 16" color="rgb(0, 0, 0)">
+                            <path
+                              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd"
+                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                          </svg>
+                        </a>
+                      </div>
+                      <!-- 삭제버튼 -->
+                      <div class="edit-del-btn">
+                        <a href="/post/delete-post/{{ post.id }}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-trash" viewBox="0 0 16 16" color="rgb(0, 0, 0)">
+                            <path
+                              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                    {% endif %}
                   </header>
                 </div>
               </div>
@@ -86,14 +117,16 @@
                       </button>
                     </span>
                     <span class="like-i2">
-                      <button class="like-i3">
-                        <div class="bi-heart2">
-                          <svg aria-label="댓글 달기" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)"
-                            height="24" role="img" viewBox="0 0 24 24" width="24">
-                            <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none"
-                              stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
-                          </svg>
-                        </div>
+                      <form action="/post/post-detail/{{ post.id }}">
+                        <button class="like-i3">
+                      </form>
+                      <div class="bi-heart2">
+                        <svg aria-label="댓글 달기" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)"
+                          height="24" role="img" viewBox="0 0 24 24" width="24">
+                          <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor"
+                            stroke-linejoin="round" stroke-width="2"></path>
+                        </svg>
+                      </div>
                       </button>
                     </span>
                   </section>
