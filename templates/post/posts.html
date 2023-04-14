@@ -1,6 +1,7 @@
 {% extends "post/base.html" %}
 
 {% load static %}
+
 {% block title %}A-Yo SNS{% endblock title %}
 {% block content %}
 
@@ -22,7 +23,7 @@
                       {% if post.author.profile_photo %}
                       <a href="#">
                         <span class="photo2">
-                          <img src="{{ post.author.profile_photo.url }}" alt="profile-photo"
+                          <img src="{{ post.author.profile_photo }}" alt="profile-photo"
                             style="height: 42px; width: 42px" />
                         </span>
                       </a>
@@ -39,12 +40,12 @@
                           {{ post.author.username }}
                         </div>
                         <div class="profile-at">
-                          <span>•</span>{{ post.create_at|timesince }} 전
+                          <span>•</span>{{ post.create_at }} <p>8+3={{ 8|add:3 }}</p>
                         </div>
                       </div>
                     </div>
                     <!-- 수정,삭제 버튼 -->
-                    {% if post.author == user %}
+                    {% if post.author.id == user.id %}
                     <div class="edit-del">
                       <!-- 수정버튼 -->
                       <div class="edit-del-btn">
@@ -60,7 +61,7 @@
                       </div>
                       <!-- 삭제버튼 -->
                       <div class="edit-del-btn">
-                        <a href="/post/delete-post/{{ post.id }}">
+                        <a href="/post/delete-post/{{ post.id }}" onclick="return confirm('삭제할까요?');">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-trash" viewBox="0 0 16 16" color="rgb(0, 0, 0)">
                             <path
@@ -79,7 +80,7 @@
               <div class="post-image1">
                 {% if post.image %}
                 <div class="post-image2">
-                  <img src="{{ post.image.url }}" alt="post-image" crossorigin="anonymous" decoding="auto" sizes="468px"
+                  <img src="{{ post.image }}" alt="post-image" crossorigin="anonymous" decoding="auto" sizes="468px"
                     style="object-fit: cover" />
                 </div>
                 {% else %}
@@ -145,14 +146,47 @@
                           {{ post.caption }}
                         </div>
                       </div>
-                      <div class="post-author-name2">
-                        <div class="post-author-name4">
-                          <a href="">댓글 작성자</a>
+                      
+                      {% for comment in post.comment_post %}
+                      
+                      <div class="conntent-box">
+                        <div class="post-author-name2">
+                          <div class="post-author-name4">
+                            <a href="#">{{ comment.author.username }}</a>
+                          </div>
+                          <div class="caption-coment2" id="comment-{{ comment.id }}">
+                            {{ comment.contents }}
+                          </div>
                         </div>
-                        <div class="caption-coment2">
-                          ---------댓글 내용---------------
+                        <div>
+                          {% if user.id == comment.author.id %}
+                          <a href="{% url 'post:comment_delete' comment.id %}" onclick="return confirm('삭제할까요?');">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-trash3"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
+                              />
+                            </svg>
+                          </a>
+                          {% endif %}
                         </div>
                       </div>
+                      {% endfor %}
+                      <!-- 댓글 입력 부분 -->
+                      <section class="comment-input">
+                        <div class="comment-input2">
+                          <form class="input-comment" action="{% url 'post:comment_create' post.id %}" method="POST">
+                            {% csrf_token %}
+                            {{ comment_form }}
+                          </form>
+                        </div>
+                      </section>
                     </div>
                   </div>
                 </div>

@@ -3,18 +3,13 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import PostForm
-from .models import Post
+from .forms import PostForm, CommentForm
+from .models import Post, Comment
 from user.models import User as user_model
+from . import serializers
 
 # Create your views here.
 
-
-def post_views(request):
-    if request.method == "GET":
-        if request.user.is_authenticated:
-            posts = Post.objects.order_by('-id')
-            return render(request, 'post/main.html', {'posts': posts})
 
 
 def post_detail(request, id):
@@ -85,8 +80,13 @@ def delete_post(request, id):
 @login_required(login_url='')
 def user_feed(request):
     if request.method == 'GET':
+        comment_form = CommentForm()
         post_list = Post.objects.all().order_by('-id')
-        return render(request, 'post/posts.html', {'posts': post_list})
+
+
+        serializer = serializers.PostSerializer(post_list, many=True)
+        
+        return render(request, 'post/posts.html', {'posts': serializer.data, 'comment_form': comment_form})
 
 
 """마이페이지를 보여주는 함수 이름,프로필,프사,이메일"""
@@ -102,10 +102,42 @@ def mypage_view(request, id):
             return redirect('user/signup.html')
 
 
+@login_required(login_url='')
 def search(request):
     if request.user.is_authenticated:
         if request.method == "GET":
             search_keyword = request.GET.get("q", "")
+            comment_form = CommentForm()
+
             posts = Post.objects.filter(caption__contains=search_keyword)
 
-            return render(request, 'post/main.html', {'posts': posts})
+            serializer = serializers.PostSerializer(posts, many=True)
+            return render(request, 'post/posts.html', {'posts': serializer.data, 'comment_form': comment_form})
+
+
+@login_required(login_url='')
+def comment_create(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.author = request.user
+        comment.posts = post
+        comment.save()
+
+        return redirect(reverse('post:feed') + "#comment-" + str(comment.id))
+    
+    else :
+        post_list = Post.objects.all().order_by('-id')
+        comment_form = CommentForm()
+
+        return render(request, 'post/posts.html', {'posts': post_list, 'comment_form': comment_form})
+        
+
+@login_required(login_url='')
+def comment_delete(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    if request.user == comment.author:
+        comment.delete()
+    
+    return redirect(reverse('post:feed'))
