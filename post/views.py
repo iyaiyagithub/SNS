@@ -15,12 +15,12 @@ from django.views.generic import ListView, TemplateView
 # Create your views here.
 
 
-def post_detail(request, id):
-    post = get_object_or_404(Post, id=id)
-    context = {
-        'post': post,
-    }
-    return render(request, 'post/post-detail.html', context)
+# def post_detail(request, id):
+#     post = get_object_or_404(Post, id=id)
+#     context = {
+#         'post': post,
+#     }
+#     return render(request, 'post/post-detail.html', context)
 
 
 @login_required(login_url='')

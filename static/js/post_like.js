@@ -65,7 +65,7 @@ $(document).ready(function () {
             data: { 'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}' }, // 서버로 데이터 전송시 옵션
             dataType: "json", // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
             // 서버측에서 전송한 Response 데이터 형식 (json)
-            // {'likes_count': post.like_count, 'message': message }
+            // {'likes_count': post.like_count }
             success: function (response) { // 통신 성공시 - 동적으로 좋아요 개수 변경
                 $("#count-" + pk).html("좋아요 " + response.like_count + "개");
             }

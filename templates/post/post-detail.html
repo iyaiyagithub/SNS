@@ -8,6 +8,7 @@
 <div>{% include "user/profile_views.html" %}</div>
 
 <main class="container">
+    {% for post in posts %}
     <section class="post-form" id="post-{{ post.id }}">
         <div id="post-main">
             <div id="post-main2">
@@ -22,7 +23,7 @@
                                             {% if post.author.profile_photo %}
                                             <a href="#">
                                                 <span class="photo2">
-                                                    <img src="{{ post.author.profile_photo.url }}" alt="profile-photo"
+                                                    <img src="{{ post.author.profile_photo }}" alt="profile-photo"
                                                         style="height: 42px; width: 42px" />
                                                 </span>
                                             </a>
@@ -82,8 +83,8 @@
                             <div class="post-image1">
                                 {% if post.image %}
                                 <div class="post-image2">
-                                    <img src="{{ post.image.url }}" alt="post-image" crossorigin="anonymous"
-                                        decoding="auto" sizes="468px" style="object-fit: cover" />
+                                    <img src="{{ post.image }}" alt="post-image" crossorigin="anonymous" decoding="auto"
+                                        sizes="468px" style="object-fit: cover" />
                                 </div>
                                 {% else %}
                                 <div class="post-image2">
@@ -97,9 +98,9 @@
                                 <div class="comment-box2">
                                     <section class="like-i">
                                         <span class="like-i2">
-                                            <button class="like-i3" id="like-button-{{ post.id }}" type="button"
-                                                onclick="likeClick(this.id)">
-                                                {% if user.id in post.image_likes %}
+                                            <button class="like-i3" name="{{ post.id }}" id="like-button-{{ post.id }}"
+                                                type="button" onclick="likeClick(this.id)">
+                                                {% if user.id in post.post_likes %}
                                                 <div class="bi-heart2" id="like-{{ post.id }}">
                                                     <span class="like" style="display: flex;">
                                                         <svg aria-label="좋아요 취소" class="x1lliihq x1n2onr6"
@@ -166,7 +167,8 @@
                                     </section>
                                     <section class="count-like">
                                         <div class="count-like2">
-                                            <span class="count-like3">좋아요 10만 개</span>
+                                            <span class="count-like3" id="count-{{ post.id }}">좋아요 {{ post.like_count
+                                                }}개</span>
                                         </div>
                                     </section>
                                     <div class="post-caption-box">
@@ -193,7 +195,7 @@
                                             </div>
 
 
-                                            {% for comment in post.comment_post.all %}
+                                            {% for comment in post.comment_post %}
 
                                             <div class="conntent-box">
                                                 <div class="post-author-name2">
@@ -239,6 +241,7 @@
             </div>
         </div>
     </section>
+    {% endfor %}
 </main>
 
 {% endblock content %}
