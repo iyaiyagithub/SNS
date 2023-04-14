@@ -30,7 +30,6 @@ class PostSerializer(serializers.ModelSerializer):
     author = FeedAuthorSerializer()
     create_at = serializers.DateTimeField(format='%m월 %d일 %H시 %M분, %Y년')
     
-
     class Meta:
         model = models.Post
         fields = (
@@ -40,4 +39,5 @@ class PostSerializer(serializers.ModelSerializer):
             "comment_post",
             "author",
             "create_at",
+            "post_likes",
         )

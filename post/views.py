@@ -8,16 +8,18 @@ from .models import Post, Comment
 from user.models import User as user_model
 from . import serializers
 
+from django.http import JsonResponse
+
 # Create your views here.
 
 
 
-def post_detail(request, id):
-    post = get_object_or_404(Post, id=id)
-    context = {
-        'post': post,
-    }
-    return render(request, 'post/post-detail.html', context)
+# def post_detail(request, id):
+#     post = get_object_or_404(Post, id=id)
+#     context = {
+#         'post': post,
+#     }
+#     return render(request, 'post/post-detail.html', context)
 
 
 @login_required(login_url='')
@@ -61,7 +63,7 @@ def edit_post(request, id):
             edit_post.author = user
             edit_post.id = current_edit_post
             edit_post.save()
-            return redirect('/post/post-detail/'+str(current_edit_post))
+            return redirect(reverse('post:feed')+ "#post-" + str(edit_post.id))
 
 
 @login_required(login_url='')
@@ -71,7 +73,7 @@ def delete_post(request, id):
     # current_delete_post = delete_post.id
     delete_post.delete()
     # return redirect('/delete-post/'+str(current_delete_post))
-    return redirect('/post')
+    return redirect('post:feed')
 
 
 """피드 페이지 """
@@ -82,7 +84,6 @@ def user_feed(request):
     if request.method == 'GET':
         comment_form = CommentForm()
         post_list = Post.objects.all().order_by('-id')
-
 
         serializer = serializers.PostSerializer(post_list, many=True)
         
@@ -141,3 +142,21 @@ def comment_delete(request, comment_id):
         comment.delete()
     
     return redirect(reverse('post:feed'))
+
+
+@login_required(login_url='')
+def post_like(request, post_id):
+    response_body = {"result": ""}
+
+    if request.method == "POST":
+        post = get_object_or_404(Post, pk=post_id)
+        like_user = post.post_likes.filter(pk=request.user.id).exists()
+        if like_user:
+            post.post_likes.remove(request.user)
+            response_body['result'] = 'dislike'
+        else:
+            post.post_likes.add(request.user)
+            response_body['result'] = 'like'
+
+        post.save()
+        return JsonResponse(status=200, data=response_body) # https://developer.mozilla.org/ko/docs/Web/HTTP/Status

@@ -20,6 +20,7 @@ class Post(TimeStamedModel):
     )
     image = models.ImageField(blank=True, null=True)
     caption = models.TextField(blank=False)
+    post_likes = models.ManyToManyField(user_model.User, blank=True, related_name='post_like')
 
 
     def __str__(self):

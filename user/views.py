@@ -8,6 +8,8 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import UserUpdateForm
+from post.forms import CommentForm
+from post.serializers import PostSerializer
 
 from post import models
 
@@ -61,10 +63,13 @@ def logout(request):
 
 @login_required
 def my_posts(request):
-    if request.method == "GET":
+    if request.method == 'GET':
+        comment_form = CommentForm()
         user = get_object_or_404(models_user, pk=request.user.id)
-        posts = models.Post.objects.filter(author=user).order_by('-id')
-        return render(request, 'post/posts.html', {'user': user, "posts": posts})
+        post_list = models.Post.objects.filter(author=user).order_by('-id')
+        serializer = PostSerializer(post_list, many=True)
+        
+        return render(request, 'post/posts.html', {'posts': serializer.data, 'comment_form': comment_form, 'user': user})
 
 
 @login_required
