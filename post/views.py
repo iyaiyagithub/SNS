@@ -13,7 +13,6 @@ from django.http import JsonResponse
 # Create your views here.
 
 
-
 # def post_detail(request, id):
 #     post = get_object_or_404(Post, id=id)
 #     context = {
@@ -63,7 +62,7 @@ def edit_post(request, id):
             edit_post.author = user
             edit_post.id = current_edit_post
             edit_post.save()
-            return redirect(reverse('post:feed')+ "#post-" + str(edit_post.id))
+            return redirect(reverse('post:feed') + "#post-" + str(edit_post.id))
 
 
 @login_required(login_url='')
@@ -86,7 +85,7 @@ def user_feed(request):
         post_list = Post.objects.all().order_by('-id')
 
         serializer = serializers.PostSerializer(post_list, many=True)
-        
+
         return render(request, 'post/posts.html', {'posts': serializer.data, 'comment_form': comment_form})
 
 
@@ -110,7 +109,9 @@ def search(request):
             search_keyword = request.GET.get("q", "")
             comment_form = CommentForm()
 
-            posts = Post.objects.filter(caption__contains=search_keyword)
+            # 검색어가 포함된 caption과 username을 모두 찾음
+            posts = Post.objects.filter(Q(caption__contains=search_keyword) | Q(
+                author__username__contains=search_keyword))
 
             serializer = serializers.PostSerializer(posts, many=True)
             return render(request, 'post/posts.html', {'posts': serializer.data, 'comment_form': comment_form})
@@ -127,20 +128,20 @@ def comment_create(request, post_id):
         comment.save()
 
         return redirect(reverse('post:feed') + "#comment-" + str(comment.id))
-    
-    else :
+
+    else:
         post_list = Post.objects.all().order_by('-id')
         comment_form = CommentForm()
 
         return render(request, 'post/posts.html', {'posts': post_list, 'comment_form': comment_form})
-        
+
 
 @login_required(login_url='')
 def comment_delete(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user == comment.author:
         comment.delete()
-    
+
     return redirect(reverse('post:feed'))
 
 
@@ -159,4 +160,5 @@ def post_like(request, post_id):
             response_body['result'] = 'like'
 
         post.save()
-        return JsonResponse(status=200, data=response_body) # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
+        # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
+        return JsonResponse(status=200, data=response_body)
