@@ -15,21 +15,21 @@ class FeedAuthorSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     author = FeedAuthorSerializer()
+
     class Meta:
         model = models.Comment
         fields = (
             "id",
             "contents",
-            "author", # 코멘트 모델에 있음 / 코멘트 적은 사람 가져오기
+            "author",  # 코멘트 모델에 있음 / 코멘트 적은 사람 가져오기
         )
-
 
 
 class PostSerializer(serializers.ModelSerializer):
     comment_post = CommentSerializer(many=True)
     author = FeedAuthorSerializer()
-    create_at = serializers.DateTimeField(format='%m월 %d일 %H시 %M분, %Y년')
-    
+    create_at = serializers.DateTimeField(format='%Y-%m-%d %H:%M')
+
     class Meta:
         model = models.Post
         fields = (
