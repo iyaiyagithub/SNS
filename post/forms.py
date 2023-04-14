@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
@@ -14,3 +14,10 @@ class PostForm(forms.ModelForm):
             "caption": "내용",
             "image": "사진"
         }
+
+class CommentForm(forms.ModelForm):
+    contents = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'input-comment2', 'placeholder':'댓글 달기..'}))
+
+    class Meta:
+        model = Comment
+        fields = ["contents"]

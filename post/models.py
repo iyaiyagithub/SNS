@@ -21,6 +21,7 @@ class Post(TimeStamedModel):
     image = models.ImageField(blank=True, null=True)
     caption = models.TextField(blank=False)
 
+
     def __str__(self):
         return f"{self.author}: {self.caption}"
 

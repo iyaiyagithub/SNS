@@ -142,15 +142,6 @@ a {
   padding-left: 4px;
 }
 
-
-
-
-
-
-
-
-
-
 .photo2 {
   background-color: rgb(250, 250, 250);
   width: 42px;
@@ -385,6 +376,12 @@ a {
   font-weight: 600;
   font-size: 14px;
   color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+.conntent-box {
+  display: flex;
+  justify-content: space-between;
 }
 
 .caption-coment {
@@ -408,6 +405,7 @@ a {
 
 .post-author-name4 a {
   list-style: none;
+  text-decoration: none;
   box-sizing: border-box;
   margin: 0;
   outline: none;
