@@ -19,6 +19,8 @@
                                             enctype="multipart/form-data">
                                             {% csrf_token %}
                                             {{ form.as_p }}
+         
+                                         
                                             <div class="write-post-back">
                                                 {% if edit %}
                                                 <input type="submit" class="btn btn-primary" style="float:right;"

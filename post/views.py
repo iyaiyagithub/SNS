@@ -9,6 +9,8 @@ from user.models import User as user_model
 from . import serializers
 
 from django.http import JsonResponse
+from .forms import PostForm
+from django.views.generic import ListView, TemplateView
 
 # Create your views here.
 
@@ -35,6 +37,9 @@ def write_post(request):
             write_post = post_form.save(commit=False)
             write_post.author = user
             write_post.save()
+            post_form.save_m2m()
+            print(post_form)
+            
             return redirect('post:feed')
         else:
             return redirect('user:signup')
@@ -160,5 +165,28 @@ def post_like(request, post_id):
             response_body['result'] = 'like'
 
         post.save()
-        # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
-        return JsonResponse(status=200, data=response_body)
+        return JsonResponse(status=200, data=response_body) # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
+
+
+
+# 태그 추가해줄 함수들
+class TagCloudTV(TemplateView):
+    template_name = 'taggit/tag_cloud_view.html'
+    
+# def tag_cloud_tv(request):
+    # return render('taggit/tag_cloud_view.html')
+
+class TaggedObjectLV(ListView):
+    template_name = 'taggit/tag_with_post.html'
+    model = Post
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__name=self.kwargs.get('tag'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)          
+        context["tagname"] = self.kwargs["tag"] 
+        return context
+        
+# def tag_cloud_tv(request):
+#     return render('taggit/tag_cloud_view.html', context={"tagname": "tag"})

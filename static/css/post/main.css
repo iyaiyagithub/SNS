@@ -487,3 +487,7 @@ a {
 }
 
 
+.tag_button {
+  display:flex;
+  flex-direction: row;
+}

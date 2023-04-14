@@ -1,6 +1,6 @@
 from django.db import models
 from user import models as user_model
-
+from taggit.managers import TaggableManager
 
 class TimeStamedModel(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
@@ -21,6 +21,7 @@ class Post(TimeStamedModel):
     image = models.ImageField(blank=True, null=True)
     caption = models.TextField(blank=False)
     post_likes = models.ManyToManyField(user_model.User, blank=True, related_name='post_like')
+    tags = TaggableManager(blank=True)
 
 
     def __str__(self):
