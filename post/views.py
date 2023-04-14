@@ -159,11 +159,15 @@ def post_like(request, post_id):
         like_user = post.post_likes.filter(pk=request.user.id).exists()
         if like_user:
             post.post_likes.remove(request.user)
-            response_body['result'] = 'dislike'
+            result = 'dislike'
         else:
             post.post_likes.add(request.user)
-            response_body['result'] = 'like'
+            result = 'like'
 
+        response_body = {
+            'result': result,
+            'like_count': post.like_count,
+        }
         post.save()
         # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
         return JsonResponse(status=200, data=response_body)

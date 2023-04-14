@@ -2,6 +2,7 @@ from django.db import models
 from user import models as user_model
 from taggit.managers import TaggableManager
 
+
 class TimeStamedModel(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(
@@ -20,9 +21,13 @@ class Post(TimeStamedModel):
     )
     image = models.ImageField(blank=True, null=True)
     caption = models.TextField(blank=False)
-    post_likes = models.ManyToManyField(user_model.User, blank=True, related_name='post_like')
+    post_likes = models.ManyToManyField(
+        user_model.User, blank=True, related_name='post_like')
     tags = TaggableManager(blank=True)
 
+    @property
+    def like_count(self):
+        return self.post_likes.count()
 
     def __str__(self):
         return f"{self.author}: {self.caption}"

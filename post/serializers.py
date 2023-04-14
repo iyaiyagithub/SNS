@@ -40,5 +40,6 @@ class PostSerializer(serializers.ModelSerializer):
             "author",
             "create_at",
             "post_likes",
+            "like_count",
             "tags",
         )
