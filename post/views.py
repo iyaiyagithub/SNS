@@ -39,7 +39,7 @@ def write_post(request):
             write_post.save()
             post_form.save_m2m()
             print(post_form)
-            
+
             return redirect('post:feed')
         else:
             return redirect('user:signup')
@@ -159,22 +159,27 @@ def post_like(request, post_id):
         like_user = post.post_likes.filter(pk=request.user.id).exists()
         if like_user:
             post.post_likes.remove(request.user)
-            response_body['result'] = 'dislike'
+            result = 'dislike'
         else:
             post.post_likes.add(request.user)
-            response_body['result'] = 'like'
+            result = 'like'
 
+        response_body = {
+            'result': result,
+            'like_count': post.like_count,
+        }
         post.save()
-        return JsonResponse(status=200, data=response_body) # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
-
+        # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
+        return JsonResponse(status=200, data=response_body)
 
 
 # 태그 추가해줄 함수들
 class TagCloudTV(TemplateView):
     template_name = 'taggit/tag_cloud_view.html'
-    
+
 # def tag_cloud_tv(request):
     # return render('taggit/tag_cloud_view.html')
+
 
 class TaggedObjectLV(ListView):
     template_name = 'taggit/tag_with_post.html'
@@ -182,11 +187,11 @@ class TaggedObjectLV(ListView):
 
     def get_queryset(self):
         return Post.objects.filter(tags__name=self.kwargs.get('tag'))
-    
+
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)          
-        context["tagname"] = self.kwargs["tag"] 
+        context = super().get_context_data(**kwargs)
+        context["tagname"] = self.kwargs["tag"]
         return context
-        
+
 # def tag_cloud_tv(request):
 #     return render('taggit/tag_cloud_view.html', context={"tagname": "tag"})
