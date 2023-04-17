@@ -500,7 +500,9 @@ a {
   font-size: 14px;
   color: rgb(120, 120, 120);
   margin-bottom: 4px;
-  
+
+}
+
 .tag_button {
   display:flex;
   flex-direction: row;

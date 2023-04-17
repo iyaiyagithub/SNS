@@ -1,14 +1,21 @@
 $(document).ready(function () {
   var numToShow = 2; // 최근 댓글 몇개를 보여줄 것인지
   var post_count = document.querySelectorAll("#comments");
+  console.log(post_count);
   
   for (i = 0; i < post_count.length; i++) {
+        
       var comment = post_count[i].querySelectorAll('.conntent-box');
       var array = []
+      console.log(comment);
       comment.forEach(function(x) {
           array.unshift(x.id);
+          console.log(x.id);
           document.getElementById(x.id).style.display = 'none';
         });
+        console.log(array);
+        console.log(array[0]);
+        console.log(array[1]);
         if (array.length >= numToShow) {
             document.getElementById(array[0]).style.display = 'flex';
             document.getElementById(array[1]).style.display = 'flex';
