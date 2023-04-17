@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,windows,python,django
 
 # Secret Key
-secret.json
+secrets.json
 
 ### Django ###
 *.log
