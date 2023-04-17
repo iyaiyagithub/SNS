@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,windows,python,django
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,windows,python,django
 
+# Secret Key
+secret.json
 
 ### Django ###
 *.log
