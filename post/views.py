@@ -170,3 +170,23 @@ def post_like(request, post_id):
 
         post.save()
         return JsonResponse(status=200, data=response_body) # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
+
+
+@login_required(login_url='')
+def post_modal(request, post_id):
+    
+    post = Post.objects.get(id=post_id)
+    serializer = serializers.PostSerializer(post)
+    
+    return JsonResponse(status=200, data=serializer.data)
+    # if request.method == "GET":
+        # comment_form = CommentForm()
+        
+        # post = Post.objects.filter(id=post_id)
+        # serializer = serializers.PostSerializer(post, many=True)
+        # print(serializer.data)
+        # response_body = {
+        #     "posts": serializer.data,
+        #     "comment_form": comment_form,
+        # }
+        # return JsonResponse(status=200, data=response_body)

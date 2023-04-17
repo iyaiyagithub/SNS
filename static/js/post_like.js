@@ -20,14 +20,12 @@ function getCookie(name) {
 
 const likeClick = (buttonId) => {
     console.log(buttonId);
-
-    const likeButton = document.getElementById(buttonId);
-    const likeIconFind = likeButton.querySelector(".bi-heart2");
-    const likeIcon = likeIconFind.children;
+    const postId = buttonId.split('-').pop();
+    const likeButtonId = document.getElementById('like_button_' + postId);
+    const dislikeButtonId = document.getElementById('dislike_button_' + postId);
 
     const csrftoken = getCookie('csrftoken');
 
-    const postId = buttonId.split('-').pop();
     const url = '/post/' + 'post_like/' + postId
 
     // api 호출
@@ -44,13 +42,13 @@ const likeClick = (buttonId) => {
         // 결과를 받고 html(좋아요 하트) 모습을 변경
         if (data.result === "like") {
             // 좋아요 설정
-            likeIcon[0].style.display = 'flex';
-            likeIcon[1].style.display = 'none';
+            likeButtonId.style.display = 'flex';
+            dislikeButtonId.style.display = 'none';
 
         } else {
             // 좋아요 취소 설정
-            likeIcon[0].style.display = 'none';
-            likeIcon[1].style.display = 'flex';
+            likeButtonId.style.display = 'none';
+            dislikeButtonId.style.display = 'flex';
         }
     });
 
