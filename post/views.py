@@ -1,16 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.http import JsonResponse
+from django.views.generic import ListView, TemplateView
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
 from user.models import User as user_model
+from post import models
+from post.serializers import PostSerializer
 from . import serializers
 
-from django.http import JsonResponse
-from .forms import PostForm
-from django.views.generic import ListView, TemplateView
 
 # Create your views here.
 
@@ -161,7 +161,7 @@ class TagCloudTV(TemplateView):
 
 
 class TaggedObjectLV(ListView):
-    template_name = 'taggit/tag_with_post.html'
+    template_name = 'post/posts.html'
     model = Post
 
     def get_queryset(self):
@@ -170,6 +170,9 @@ class TaggedObjectLV(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["tagname"] = self.kwargs["tag"]
+        context["posts"] = serializers.PostSerializer(
+            context["object_list"], many=True).data
+
         return context
 
 # def tag_cloud_tv(request):

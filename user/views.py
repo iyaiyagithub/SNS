@@ -1,17 +1,15 @@
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
-from .forms import SignUpForm
-from .models import User as models_user
-from django.contrib import auth, messages
+from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from .forms import UserUpdateForm
-from post.forms import CommentForm
-from post.serializers import PostSerializer
-
+from .models import User as models_user
 from post import models
+from post.serializers import PostSerializer
+from post.forms import CommentForm
+from .forms import SignUpForm
+from .forms import UserUpdateForm
 
 
 def main(request):

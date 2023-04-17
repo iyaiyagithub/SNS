@@ -7,7 +7,11 @@
 
 <div>{% include "user/profile_views.html" %}</div>
 
+
 <main class="container">
+  {% if tagname %}
+  <div id="tag_">"{{ tagname }}" 태그가 포함된 게시글</div>
+  {% endif %}
   {% for post in posts %}
   <section class="post-form" id="post-{{ post.id }}">
     <div id="post-main">

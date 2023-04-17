@@ -34,6 +34,12 @@ a {
   vertical-align: baseline;
 }
 
+#tag_ {
+  text-align: center;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
 #post-main {
   width: 100%;
   background-color: transparent;
@@ -488,6 +494,6 @@ a {
 
 
 .tag_button {
-  display:flex;
+  display: flex;
   flex-direction: row;
 }
