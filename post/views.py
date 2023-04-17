@@ -10,9 +10,10 @@ from . import serializers
 
 from django.http import JsonResponse
 from django.db.models import Count
+from .forms import PostForm
+from django.views.generic import ListView, TemplateView
 
 # Create your views here.
-
 
 
 # def post_detail(request, id):
@@ -37,6 +38,9 @@ def write_post(request):
             write_post = post_form.save(commit=False)
             write_post.author = user
             write_post.save()
+            post_form.save_m2m()
+            print(post_form)
+
             return redirect('post:feed')
         else:
             return redirect('user:signup')
@@ -63,7 +67,7 @@ def edit_post(request, post_id):
             edit_post.author = user
             edit_post.caption = edit_form.cleaned_data['caption']
             edit_post.save()
-            return redirect(reverse('post:feed')+ "#post-" + str(edit_post.id))
+            return redirect(reverse('post:feed') + "#post-" + str(edit_post.id))
 
 
 @login_required(login_url='')
@@ -116,7 +120,9 @@ def search(request):
             search_keyword = request.GET.get("q", "")
             comment_form = CommentForm()
 
-            posts = Post.objects.filter(caption__contains=search_keyword)
+            # 검색어가 포함된 caption과 username을 모두 찾음
+            posts = Post.objects.filter(Q(caption__contains=search_keyword) | Q(
+                author__username__contains=search_keyword))
 
             serializer = serializers.PostSerializer(posts, many=True)
             context = {
@@ -143,14 +149,14 @@ def comment_create(request, post_id):
         comment_form = CommentForm()
 
         return render(request, 'post/posts.html', {'posts': post_list, 'comment_form': comment_form})
-        
+
 
 @login_required(login_url='')
 def comment_delete(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user == comment.author:
         comment.delete()
-    
+
     return redirect(reverse('post:feed'))
 
 
@@ -163,30 +169,39 @@ def post_like(request, post_id):
         like_user = post.post_likes.filter(pk=request.user.id).exists()
         if like_user:
             post.post_likes.remove(request.user)
-            response_body['result'] = 'dislike'
+            result = 'dislike'
         else:
             post.post_likes.add(request.user)
-            response_body['result'] = 'like'
+            result = 'like'
 
+        response_body = {
+            'result': result,
+            'like_count': post.like_count,
+        }
         post.save()
-        return JsonResponse(status=200, data=response_body) # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
+        # https://developer.mozilla.org/ko/docs/Web/HTTP/Status
+        return JsonResponse(status=200, data=response_body)
 
 
-@login_required(login_url='')
-def post_modal(request, post_id):
-    
-    post = Post.objects.get(id=post_id)
-    serializer = serializers.PostSerializer(post)
-    
-    return JsonResponse(status=200, data=serializer.data)
-    # if request.method == "GET":
-        # comment_form = CommentForm()
-        
-        # post = Post.objects.filter(id=post_id)
-        # serializer = serializers.PostSerializer(post, many=True)
-        # print(serializer.data)
-        # response_body = {
-        #     "posts": serializer.data,
-        #     "comment_form": comment_form,
-        # }
-        # return JsonResponse(status=200, data=response_body)
+# 태그 추가해줄 함수들
+class TagCloudTV(TemplateView):
+    template_name = 'taggit/tag_cloud_view.html'
+
+# def tag_cloud_tv(request):
+    # return render('taggit/tag_cloud_view.html')
+
+
+class TaggedObjectLV(ListView):
+    template_name = 'taggit/tag_with_post.html'
+    model = Post
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__name=self.kwargs.get('tag'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tagname"] = self.kwargs["tag"]
+        return context
+
+# def tag_cloud_tv(request):
+#     return render('taggit/tag_cloud_view.html', context={"tagname": "tag"})

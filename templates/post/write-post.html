@@ -19,9 +19,16 @@
                                         <form method="POST" enctype="multipart/form-data">
                                             {% csrf_token %}
                                             {{ form.as_p }}
+         
+                                         
                                             <div class="write-post-back">
+                                                {% if edit %}
                                                 <input type="submit" class="btn btn-primary" style="float:right;"
                                                     value="수정하기">
+                                                {% else %}
+                                                <input type="submit" class="btn btn-primary" style="float:right;"
+                                                    value="작성하기">
+                                                {% endif %}
                                                 <a href="{% url 'post:feed' %}">뒤로가기</a>
                                             </div>
                                         </form>

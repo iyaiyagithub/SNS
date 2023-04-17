@@ -14,7 +14,7 @@ class SignUpForm(django_forms.ModelForm):
         widgets = {
             'email': django_forms.TextInput(attrs={'class': 'get-input', 'placeholder': '이메일 주소'}),
             'name': django_forms.TextInput(attrs={'class': 'get-input', 'placeholder': '성명'}),
-            'username': django_forms.TextInput(attrs={'class': 'get-input', 'placeholder': '사용자 이름'}),
+            'username': django_forms.TextInput(attrs={'class': 'get-input', 'placeholder': '아이디'}),
             'password': django_forms.PasswordInput(attrs={'class': 'get-input', 'placeholder': '비밀번호'}),
         }
 
