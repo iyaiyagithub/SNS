@@ -15,6 +15,7 @@ from post import models
 
 
 def main(request):
+    """로그인 함수"""
     if request.method == 'GET':
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse('post:feed'))
@@ -32,6 +33,7 @@ def main(request):
 
 
 def signup(request):
+    """회원가입 함수"""
     if request.method == 'GET':
         form = SignUpForm()
 
@@ -57,34 +59,26 @@ def signup(request):
 
 @login_required
 def logout(request):
+    """로그아웃 함수"""
     auth.logout(request)
     return render(request, 'user/main.html')
 
 
 @login_required
 def my_posts(request):
+    """내가 쓴 글만 보여주는 함수"""
     if request.method == 'GET':
         comment_form = CommentForm()
         user = get_object_or_404(models_user, pk=request.user.id)
         post_list = models.Post.objects.filter(author=user).order_by('-id')
         serializer = PostSerializer(post_list, many=True)
-        
+
         return render(request, 'post/posts.html', {'posts': serializer.data, 'comment_form': comment_form, 'user': user})
 
 
 @login_required
-def profile_update(request):
-    if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, '프로필 업데이트 완료')
-            return redirect('user:my-posts')
-    return render(request, 'user/profile_update.html')
-
-
-@login_required
 def edit_profile(request, user_id):
+    """프로필 수정 함수"""
     user = get_object_or_404(models_user, pk=user_id)
     if user:
         # 로그인한 유저가 맞다면
