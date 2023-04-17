@@ -171,6 +171,3 @@ class TaggedObjectLV(ListView):
             context["object_list"], many=True).data
 
         return context
-
-# def tag_cloud_tv(request):
-#     return render('taggit/tag_cloud_view.html', context={"tagname": "tag"})
