@@ -162,7 +162,7 @@ def comment_delete(request, comment_id):
 
 @login_required(login_url='')
 def post_like(request, post_id):
-    response_body = {"result": ""}
+    response_body = {"result": "", "like_count": ""}
 
     if request.method == "POST":
         post = get_object_or_404(Post, pk=post_id)

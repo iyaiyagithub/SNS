@@ -19,7 +19,6 @@ function getCookie(name) {
 
 
 const likeClick = (buttonId) => {
-    console.log(buttonId);
     const postId = buttonId.split('-').pop();
     const likeButtonId = document.getElementById('like_button_' + postId);
     const dislikeButtonId = document.getElementById('dislike_button_' + postId);
@@ -45,10 +44,12 @@ const likeClick = (buttonId) => {
             likeButtonId.style.display = 'flex';
             dislikeButtonId.style.display = 'none';
 
+
         } else {
             // 좋아요 취소 설정
             likeButtonId.style.display = 'none';
             dislikeButtonId.style.display = 'flex';
+
         }
     });
 }
