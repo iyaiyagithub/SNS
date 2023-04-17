@@ -9,7 +9,7 @@
       <div class="loginBox">
         <!-- 대문이름 -->
         <div id="logo">
-          <a href="#">Django Project</a>
+          <a href="#">A-yo SNS</a>
         </div>
         <!-- 로그인폼 -->
         <div id="login_text">
@@ -18,7 +18,7 @@
             <!-- 아이디 입력창 -->
             <div class="input-aria">
               <div class="input-info">
-                <input type="input" name="username" placeholder="사용자 이름" class="get-input">
+                <input type="input" name="username" placeholder="아이디" class="get-input">
               </div>
             </div>
             <!-- 비밀번호 입력창 -->
@@ -41,9 +41,7 @@
         <span>
           <p id="signup-p">
             계정이 없으신가요?
-            <a href="{% url 'user:signup' %}" role="link" tabindex="0"
-              >가입하기</a
-            >
+            <a href="{% url 'user:signup' %}" role="link" tabindex="0">가입하기</a>
           </p>
         </span>
       </div>
