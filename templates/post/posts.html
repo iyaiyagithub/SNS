@@ -3,14 +3,16 @@
 {% load static %}
 
 {% block title %}A-Yo SNS{% endblock title %}
+
 {% block content %}
 
 <div>{% include "user/profile_views.html" %}</div>
-
-
 <main class="container">
   {% if tagname %}
-  <div id="tag_">"{{ tagname }}" 태그가 포함된 게시글</div>
+  <div id="tag_" class="badge rounded-pill bg-warning text-dark"
+    style="font-size: 15px; box-shadow: #0f0f0f 0px 0px 5px;">
+    "{{ tagname }}" 태그가 포함된 게시글
+  </div>
   {% endif %}
   {% for post in posts %}
   <section class="post-form" id="post-{{ post.id }}">
@@ -146,9 +148,7 @@
                       </button>
                     </span>
                     <span class="like-i2">
-                      <!-- <form action="/post/post-detail/{{ post.id }}"> -->
                       <button class="like-i3">
-                        <!-- </form> -->
                         <div class="bi-heart2">
                           <svg aria-label="댓글 달기" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)"
                             height="24" role="img" viewBox="0 0 24 24" width="24">
@@ -176,19 +176,17 @@
                       </div>
 
                       <div class="tag_button">
-
-                        {% for tag in post.tags.all %}
-                        <a href="/post/tag/{{ tag.name }}/" name="tagged_object_list">
-                          <button type="submit" style="width:fit-content"
-                            class="badge rounded-pill bg-warning text-dark">{{ tag.name }}</button>
-                        </a>
-                        {% endfor %}
-
+                        <span style="max-width: 470px;">
+                          {% for tag in post.tags.all %}
+                          <a href="/post/tag/{{ tag.name }}/" name="tagged_object_list" style="text-decoration: none;">
+                            <button type="submit" style="width:fit-content"
+                              class="badge rounded-pill bg-warning text-dark">{{ tag.name }}</button>
+                          </a>
+                          {% endfor %}
+                        </span>
                       </div>
 
-
                       {% for comment in post.comment_post %}
-
                       <div class="conntent-box">
                         <div class="post-author-name2">
                           <div class="post-author-name4">

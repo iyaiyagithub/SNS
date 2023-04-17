@@ -154,10 +154,7 @@ def post_like(request, post_id):
 
 # 태그 추가해줄 함수들
 class TagCloudTV(TemplateView):
-    template_name = 'taggit/tag_cloud_view.html'
-
-# def tag_cloud_tv(request):
-    # return render('taggit/tag_cloud_view.html')
+    template_name = 'taggit/tag_cloud.html'
 
 
 class TaggedObjectLV(ListView):
