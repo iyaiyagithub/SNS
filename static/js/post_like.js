@@ -51,6 +51,7 @@ const likeClick = (buttonId) => {
             dislikeButtonId.style.display = 'flex';
         }
     });
+}
 
 $(document).ready(function () {
     $(".like-i3").click(function () {

@@ -20,7 +20,6 @@ urlpatterns = [
 
     path('post_like/<int:post_id>', views.post_like, name='post_like'),
 
-    path('<int:post_id>/post_modal/', views.post_modal, name='post-modal'),
     path('tag/', views.TagCloudTV.as_view(), name='tag_cloud'),
     path('tag/<str:tag>/', views.TaggedObjectLV.as_view(),
          name='tagged_object_list'),
