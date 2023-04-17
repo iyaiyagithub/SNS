@@ -1,14 +1,16 @@
-{% extends 'base.html' %}
 {% load static %}
-{% load bootstrap4 %}
 
-{% block body %}
-<h1 class="text-center">회원정보 변경</h1>
-<form method="POST" enctype="multipart/form-data">
-    <!-- 파일을 업로드할 때 form method는 POST여야하고 enctype을 multipart/form-data로 설정해야 한다. -->
-    {% csrf_token %}
-    {% bootstrap_form user_change_form %}
-    {% bootstrap_form profile_form %}
-    <button type="submit" class="btn btn-primary">수정</button>
-</form>
-{% endblock %}
+
+<div id="modal_comment_view" class="modal_overlay">
+    <div class="modal_window">
+        <div class="modal_title">
+            <div class="modal_title_side"></div>
+            <div>post</div>
+            <div class="modal_title_side">
+                <span id="close_modal" class="material-icons-outlined">
+                    <svg aria-label="닫기" class="x1lliihq x1n2onr6" color="rgb(38, 38, 38)" fill="rgb(255, 255, 255)" height="18" role="img" viewBox="0 0 24 24" width="18"><title>닫기</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

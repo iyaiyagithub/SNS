@@ -15,8 +15,8 @@
                                 <div class="media">
                                     <div class="media-body">
                                         <h5 class="mt-0">당신의 일상을 공유해 보세요</h5>
-                                        <form action="{% url 'post:write-post' %}" method="POST"
-                                            enctype="multipart/form-data">
+                                        {% if edit %}
+                                        <form method="POST" enctype="multipart/form-data">
                                             {% csrf_token %}
                                             {{ form.as_p }}
          
@@ -32,6 +32,17 @@
                                                 <a href="{% url 'post:feed' %}">뒤로가기</a>
                                             </div>
                                         </form>
+                                        {% else %}
+                                        <form method="POST" action="{% url 'post:write-post' %}" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                            <div class="write-post-back">
+                                                <input type="submit" class="btn btn-primary" style="float:right;"
+                                                    value="작성하기">
+                                                <a href="{% url 'post:feed' %}">뒤로가기</a>
+                                            </div>
+                                        </form>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
