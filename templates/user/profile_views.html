@@ -14,13 +14,16 @@
         {% endif %}
         <!-- 성명 -->
         <div class="profile-contents">
-            이름 : {{ user.name }}
+            이&nbsp;&nbsp;&nbsp;름 : {{ user.name }}
         </div>
         <div class="profile-contents">
-            닉네임 : {{ user.username }}
+            아이디 : {{ user.username }}
         </div>
         <div class="profile-contents">
-            소개 : {{ user.bio }}
+            닉네임 : {{ user.user_name }}
+        </div>
+        <div class="profile-contents">
+            소&nbsp;&nbsp;&nbsp;개 : {{ user.bio }}
         </div>
         <div class="profile-contents">
             이메일 : {{ user.email }}

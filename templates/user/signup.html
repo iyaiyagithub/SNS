@@ -12,7 +12,7 @@
       <div class="loginBox">
         <!-- 대문이름 -->
         <div id="logo">
-          <a href="#">Django Project</a>
+          <a href="#">A-yo SNS</a>
         </div>
         <!-- 회원가입폼 -->
         <div id="login_text">
@@ -21,33 +21,33 @@
             {% csrf_token %}
             {% for field in form %}
             <div class="input-aria">
-                <div class="input-info">
-                    {{ field.errors }}
-                    {{ field }}
-                </div>
+              <div class="input-info">
+                {{ field.errors }}
+                {{ field }}
+              </div>
             </div>
             {% endfor %}
-            </div>
-            <!-- 회원가입 버튼 -->
-            <div id="btnStyle">
-              <button type="submit" id="btnStyle2">
-                <div id="btnStyle3">회원가입</div>
-              </button>
-            </div>
-          </form>
         </div>
+        <!-- 회원가입 버튼 -->
+        <div id="btnStyle">
+          <button type="submit" id="btnStyle2">
+            <div id="btnStyle3">회원가입</div>
+          </button>
+        </div>
+        </form>
       </div>
-      <!-- 로그인 링크 박스 -->
-      <div class="loginBox">
-        <span id="signup-span">
-          <p id="signup-p">
-            계정이 없으신가요?
-            <a href="{% url 'user:main' %}" role="link">로그인</a>
-          </p>
-        </span>
-       </div>
+    </div>
+    <!-- 로그인 링크 박스 -->
+    <div class="loginBox">
+      <span id="signup-span">
+        <p id="signup-p">
+          계정이 없으신가요?
+          <a href="{% url 'user:main' %}" role="link">로그인</a>
+        </p>
+      </span>
     </div>
   </div>
+</div>
 </div>
 
 {% endblock content %}
