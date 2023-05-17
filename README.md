@@ -15,7 +15,14 @@ Django form과 serializer를 활용한 Newsfeed 사이트 만들기!
 - 팀원😄3 : 윤찬효 - 로그인 / 회원가입 / 좋아요
 - 팀원😄4 : 임라온 - 프로필 조회 및 수정
 
-## 🔑 프로젝트 설치 및 실행 방법
+### ⚙️ 개발 환경
+- `Python 3.11`
+- **IDE** : visual studio code
+- **Framework** : Django-Rest-Framework
+- **Database** : sqllit3
+- **requirements.txt** : requirements.txt
+
+### 🔑 프로젝트 설치 및 실행 방법
 #### 깃허브 클론하기
 - git init
 - git clone git@github.com:goodminjeong/AI-5_A5_SNS.git
@@ -26,14 +33,6 @@ Django form과 serializer를 활용한 Newsfeed 사이트 만들기!
 - python manage.py migrate
 #### 서버 실행
 - python manage.py runserver
-
-### ⚙️ 개발 환경
-- `Python 3.11`
-- **IDE** : visual studio code
-- **Framework** : Django-Rest-Framework
-- **Database** : sqllit3
-- **requirements.txt** : requirements.txt
-
 
 ## 📌 주요 기능
 #### 로그인 
