@@ -10,6 +10,7 @@ from post.serializers import PostSerializer
 from post.forms import CommentForm
 from .forms import SignUpForm
 from .forms import UserUpdateForm
+from django.contrib import messages
 
 
 def main(request):
@@ -51,8 +52,7 @@ def signup(request):
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(reverse('post:feed'))
-
-        return render(request, 'user/main.html')
+        return render(request, 'user/signup.html', {'form': form})
 
 
 @login_required
