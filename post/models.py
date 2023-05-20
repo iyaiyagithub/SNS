@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from django.db import models
 from user import models as user_model
 from taggit.managers import TaggableManager
@@ -31,6 +33,11 @@ class Post(TimeStamedModel):
 
     def __str__(self):
         return f"{self.author}: {self.caption}"
+    
+    def delete(self, *args, **kargs):
+        if self.upload_files:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.upload_files.path))
+        super(Post, self).delete(*args, **kargs)
 
 
 class Comment(TimeStamedModel):

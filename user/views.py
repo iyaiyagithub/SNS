@@ -82,7 +82,12 @@ def edit_profile(request, user_id):
         # 로그인한 유저가 맞다면
         if request.method == "GET":
             form = UserUpdateForm(instance=user)
-            return render(request, 'user/profile_edit.html', {"form": form})
+            context = {
+            'form': form,
+            'edit': '수정하기',
+        }
+            return render(request, 'user/profile_edit.html', context)
+        
         elif request.method == "POST":
             forms = UserUpdateForm(request.POST, request.FILES, instance=user)
             if forms.is_valid():

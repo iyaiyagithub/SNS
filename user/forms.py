@@ -31,11 +31,11 @@ class UserUpdateForm(django_forms.ModelForm):
         model = User
         fields = ['profile_photo', 'name', 'user_name', 'bio', 'email']
         labels = {
-            'profile_photo': '',
-            'name': '',
-            'user_name': '',
-            'bio': '',
-            'email': '',
+            'profile_photo': '프로필사진',
+            'name': '이름',
+            'user_name': '닉네임',
+            'bio': '소개',
+            'email': '이메일',
         }
 
         widgets = {
