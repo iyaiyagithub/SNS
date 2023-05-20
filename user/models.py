@@ -22,5 +22,6 @@ class User(AbstractUser):
 
     def delete(self, *args, **kargs):
         if self.upload_files:
-            os.remove(os.path.join(settings.MEDIA_ROOT, self.upload_files.path))
+            os.remove(os.path.join(
+                settings.MEDIA_ROOT, self.profile_photo.path))
         super(User, self).delete(*args, **kargs)
