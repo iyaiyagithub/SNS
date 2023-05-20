@@ -12,9 +12,9 @@ urlpatterns = [
 
     path('search/', views.search, name='post_search'),
 
-    path('<int:post_id>/comment_create/',
+    path('<int:post_id>/comment_create',
          views.comment_create, name='comment_create'),
-    path('<int:comment_id>/comment_delete/',
+    path('<int:comment_id>/comment_delete',
          views.comment_delete, name='comment_delete'),
 
     path('post_like/<int:post_id>', views.post_like, name='post_like'),
