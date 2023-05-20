@@ -1,7 +1,7 @@
 {% extends "post/base.html" %}
 
 {% load static %}
-{% block title %}A-Yo SNS | 글쓰기{% endblock %}
+{% block title %}A-Yo SNS | 수정하기{% endblock %}
 
 {% block content %}
 
@@ -14,18 +14,18 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="media">
-                                    <div class="media-body">
+                                    <div class="media-body">                                        
                                         <h5 class="mt-0">당신의 일상을 공유해 보세요</h5>
-                                        <form action="{% url 'post:write-post' %}" method="POST"
+                                        <form action="" method="POST"
                                             enctype="multipart/form-data">
                                             {% csrf_token %}
                                             {{ form.as_p }}
-                                            <div class="write-post-back">
+                                            <div class="edit-post-back">
                                                 <input type="submit" class="btn btn-primary" style="float:right;"
-                                                    value="작성하기">
+                                                    value="수정하기">
                                                 <a href="{% url 'post:feed' %}">뒤로가기</a>
                                             </div>
-                                        </form>
+                                        </form>                                        
                                     </div>
                                 </div>
                             </div>
@@ -35,6 +35,4 @@
             </div>
         </div>
     </div>
-    </div>
-
     {% endblock content %}

@@ -36,9 +36,9 @@ def write_post(request):
 
 
 @login_required(login_url='')
-def edit_post(request, id):
+def edit_post(request, post_id):
     """게시글을 수정하는 함수"""
-    edit_post = Post.objects.get(id=id)
+    edit_post = Post.objects.get(id=post_id)
     current_edit_post = edit_post.id
 
     if request.method == 'GET':
@@ -47,7 +47,7 @@ def edit_post(request, id):
             'form': edit_form,
             'edit': '수정하기',
         }
-        return render(request, 'post/write-post.html', context)
+        return render(request, 'post/edit-post.html', context)
 
     elif request.method == 'POST':
         user = get_object_or_404(user_model, pk=request.user.id)
@@ -61,9 +61,9 @@ def edit_post(request, id):
 
 
 @login_required(login_url='')
-def delete_post(request, id):
+def delete_post(request, post_id):
     """게시글을 삭제하는 함수"""
-    delete_post = Post.objects.get(id=id)
+    delete_post = Post.objects.get(id=post_id)
     delete_post.delete()
     return redirect('post:feed')
 
