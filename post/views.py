@@ -30,8 +30,6 @@ def write_post(request):
             write_post.author = user
             write_post.save()
             post_form.save_m2m()
-            print(post_form)
-
             return redirect('post:feed')
         else:
             return redirect('user:signup')
