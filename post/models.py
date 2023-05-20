@@ -35,7 +35,7 @@ class Post(TimeStamedModel):
         return f"{self.author}: {self.caption}"
     
     def delete(self, *args, **kargs):
-        if self.upload_files:
+        if self.image:
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(Post, self).delete(*args, **kargs)
 

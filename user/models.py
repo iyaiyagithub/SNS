@@ -21,7 +21,7 @@ class User(AbstractUser):
         return reverse("users:login", kwargs={"username": self.username})
 
     def delete(self, *args, **kargs):
-        if self.upload_files:
+        if self.profile_photo:
             os.remove(os.path.join(
                 settings.MEDIA_ROOT, self.profile_photo.path))
         super(User, self).delete(*args, **kargs)
